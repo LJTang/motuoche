@@ -1,0 +1,217 @@
+<!--index.wxml-->
+<!--<view class="container">-->
+  <!--<view class="userinfo">-->
+    <!--<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>-->
+    <!--<block wx:else>-->
+      <!--<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>-->
+      <!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
+    <!--</block>-->
+  <!--</view>-->
+  <!--<view class="usermotto">-->
+    <!--<text class="user-motto">{{motto}}</text>-->
+  <!--</view>-->
+<!--</view>-->
+<view class="container">
+  <view class="head_Search">
+    <view class="address"><image class="img1" src="/images/top_address.png"></image><span class="v_align_T"> {{city}} </span><image class="img2" src="/images/san.png"></image></view>
+    <view class="view_Input">
+      <input type="text" placeholder="请输入关键字搜索"/>
+      <view class="search_IMG"><image src="/images/zoom.png"></image></view>
+    </view>
+  </view>
+<!-- 轮播图 -->
+  <swiper class="swiper_IMG" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" mode="widthFix"/>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="inform"><image src="/images/trumpet.png"></image><text>浏览：</text><text class="mal20R mar20R"><text class="cFfaf00">5.78</text>万</text><text>发布：</text><text class="cFfaf00 mal20R mar20R">3456</text><text>商家：</text><text class="cFfaf00 mal20R mar20R">1245</text></view>
+  <!-- 功能列表 -->
+  <view class="feature_List">
+    <navigator url="/pages/new_car/new_car" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/n_car.png"></image></view>
+        <view class="text">新车</view>
+      </view>
+    </navigator>
+    <navigator url="/pages/new_car/new_car" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/used_car.png"></image></view>
+        <view class="text">二手车</view>
+      </view>
+    </navigator>
+
+    <view class="list_Box">
+      <view class="roundness"><image class="" src="/images/equip.png"></image></view>
+      <view class="text">装备</view>
+    </view>
+
+    <navigator url="/pages/yanghu/yanghu" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/maintain.png"></image></view>
+        <view class="text">养护及其他</view>
+      </view>
+    </navigator>
+
+    <view class="list_Box">
+      <view class="roundness"><image class="" src="/images/big_car.png"></image></view>
+      <view class="text">大贸车</view>
+    </view>
+    <navigator url="/pages/ask_to_buy/ask_to_buy" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/buy_car.png"></image></view>
+        <view class="text">求购</view>
+      </view>
+    </navigator>
+
+    <navigator url="/pages/maintain/maintain" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/service.png"></image></view>
+        <view class="text">摩托维修</view>
+      </view>
+    </navigator>
+
+    <view class="list_Box">
+      <view class="roundness"><image class="" src="/images/search_car.png"></image></view>
+      <view class="text">查找车型</view>
+    </view>
+  </view>
+  <!-- 图片 -->
+  <view class="home_IMg"><image class="" src="/images/list2.png" mode="widthFix"></image></view>
+
+  <view class="home_Nav">
+    <view bindtap="cutNav" data-index="0"><text class="{{active==0?'active':''}}">最新上架</text></view>
+    <view bindtap="cutNav" data-index="1"><text class="{{active==1?'active':''}}">距离最近</text></view>
+  </view>
+
+  <view class="goods_List">
+    <view class="layout_LR">
+      <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+      <view class="layout_Right">
+          <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
+          <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
+          <view class="cC"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+      </view>
+    </view>
+
+    <view class="layout_LR">
+      <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+      <view class="layout_Right">
+        <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
+        <view class="c9 f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
+        <view class="c9"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+      </view>
+    </view>
+
+    <view class="pab20" style="height:40px">
+      <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
+      <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
+      <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
+      <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
+    </view>
+  </view>
+
+  <!-- 导航栏 -->
+  <view class='home_Footer container'>
+    <block wx:for="{{nav}}" wx:for-item="list" wx:key="">
+      <button open-type="{{list.type}}" class='fnav_list' bindtap="jump" data-url='{{list.url}}' data-index="{{index}}">
+        <view><image src='{{list.img}}'></image></view>
+        <view><text class='{{list.on == true ? "on" :""}}'>{{list.text}}</text></view>
+      </button>
+    </block>
+  </view>
+
+
+  <view class="layout_LR">
+    <view class="layout_Left">left</view>
+    <view class="layout_Right">right</view>
+  </view>
+
+  <view class="layout_LR">
+    <view class="layout_Left">left</view>
+    <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
+  </view>
+
+  <view class="sameLine">
+    <view class="line_Left">left</view>
+    <view class="line_Center">center</view>
+    <view class="line_Right"><image src="/images/arrow-right.png"></image></view>
+  </view>
+
+  <view class="centerByContent">
+    <view class="title">详细地址</view>
+    <view class="centeredContent">
+      <!--<input class="input" type="text" placeholder="街道门牌信息"/>-->
+      <textarea name="address" auto-height placeholder="请输入" bindinput='getFocus' data-statu="textarea" value="{{address}}"/>
+    </view>
+    <view class="display_F"><image src="/images/arrow-right.png" mode=""></image></view>
+  </view>
+
+  <view class="centerByContent">
+    <view class="title">详细地址</view>
+    <view class="centeredContent">
+      <view>当然更好地发挥UI和GV金牛几把UIBHV持续举报好，计划表，。就好</view>
+    </view>
+    <view class="display_F"><image src="/images/arrow-right.png" mode=""></image></view>
+  </view>
+
+  <view class="centerByContent">
+    <view class="title display_F"><image src="/images/list1.png" mode=""></image></view>
+    <view class="centeredContent">
+      <view class="f32R">当然更好地发挥UI和</view>
+      <view class="f28R">当然更好地发挥UI和GV金牛几ghkhjkgjlktrutyu把UIBHV持续举报好，计划表，。就好</view>
+    </view>
+    <view class="centerByContent_Right">uhkgjyujk</view>
+  </view>
+
+  <view class="sameLine">
+    <view class="line_Left">单行滑动</view>
+    <view class="line_Center">
+      <picker bindchange="bindPickerChange" value="{{objectIndex}}" range="{{address_Array}}" range-key="name">
+        <view class="picker">
+          <input type="text" placeholder-style="line-height:100rpx;" placeholder="请选择地址" value="{{city}}" disabled="true"/>
+        </view>
+      </picker>
+    </view>
+    <view class="line_Right"><image src="/images/arrow-right.png"></image></view>
+  </view>
+
+
+  <view>
+    <view class="layout_LR">
+      <view class="layout_Left">toggle</view>
+      <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
+    </view>
+
+    <view>
+      <view class="layout_LR">
+        <view class="layout_Left">1</view>
+        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
+      </view>
+      <view class="layout_LR">
+        <view class="layout_Left">2</view>
+        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
+      </view>
+      <view class="layout_LR">
+        <view class="layout_Left">3</view>
+        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">
+  <view class="shadow"></view>
+  <view class="show_Layer authorized_Box">
+    <view class="">
+      <view class="authorized_Describe">授权</view>
+      <view class="authorized_Btn">
+        <view class="btn_Cancel" bindtap="popClose">取消</view>
+        <view class="btn_OK"><button open-type="getUserInfo" bindgetuserinfo="getUserInfo">确定</button></view>
+      </view>
+    </view>
+  </view>
+</view>

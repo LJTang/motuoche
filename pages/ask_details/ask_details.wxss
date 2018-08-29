@@ -1,0 +1,69 @@
+/*** 商品列表 ****/
+.container{
+  font-size:30rpx;
+  background:#fff;
+}
+.goods_List{
+  width:750rpx;
+  background:#fff;
+}
+.goods_List .layout_LR{margin:20rpx 0;}
+.goods_List .layout_LR .layout_Left{
+  width:120rpx;
+  margin-left:20rpx;
+  margin-right:20rpx;
+}
+.goods_List .layout_LR .layout_Left image{
+  width:120rpx;
+  height:120rpx;
+  border-radius:50%;
+}
+.goods_List .layout_LR .layout_Right{
+  text-align:left;
+  width:550rpx;
+  margin-right: 20rpx;
+}
+.goods_List .layout_LR .layout_Right view text.btn{
+  display:inline-block;
+  width:120rpx;
+  padding:2rpx 0;
+  text-align: center;
+  background:#00c670;
+  color: #fff;
+  border-radius: 5px;
+}
+.goods_List .layout_Right image{
+   width:30rpx;
+   height:30rpx;
+  vertical-align: middle;
+  margin-right:10rpx;
+}
+.details_Text{
+  width: 710rpx;
+  margin:auto;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #ddd;
+}
+
+.footer{
+  position: fixed;
+  bottom:0;
+  text-align: center;
+  width: 750rpx;
+  height:80rpx;
+  line-height:80rpx;
+  display: flex;
+  font-size:30rpx;
+  background:#fff;
+}
+.footer view{
+  width:375rpx;
+}
+.footer .copy_Btn{
+  background:#fff0ce;
+  color:#999;
+}
+.footer .phone_Btn{
+  background:#ffaf00;
+  color:#000;
+}

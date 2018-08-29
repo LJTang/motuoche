@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="goods_List">
+
+    <navigator url="/pages/ask_details/ask_details" hover-class="none">
+      <view class="layout_LR mat20R">
+        <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+        <view class="layout_Right">
+            <view class="mat10R"><text class="f34R">雅马哈T-1085</text> <text class="btn fR">求购</text></view>
+            <view class="cC f28R mat20R"><text>8月15 12:14</text></view>
+        </view>
+      </view>
+      <view class="f32R mal20R mar20R mab20R"><text class="c6">摩托车，有意者联系：1599595254</text></view>
+      <view class="address mal20R mar20R"><span><image src="/images/h_addrsess.png"></image>高端大气</span></view>
+      <view class="ask_Btn">
+        <view><button><image src="/images/bo_phone.png"></image><text>拨打电话</text></button></view>
+        <view><button><image src="/images/copy.png"></image><text>复制微信号</text></button></view>
+        <view><button><image src="/images/duo.png"></image><text>更多</text></button></view>
+      </view>
+    </navigator>
+  </view>
+
+    <view class="pab20" style="height:40px">
+      <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
+      <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
+      <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
+      <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
+    </view>
+
+</view>

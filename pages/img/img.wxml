@@ -1,0 +1,14 @@
+<!--<view class="popUp_Box">-->
+    <!--<view class="shadow"></view>-->
+    <!--<view class="show_Layer fixed_WH">-->
+      <!--<view class="clear"><icon class="fR" type="clear" size="30" ></icon></view>-->
+      <!--<view class="">-->
+        <!--<view>fbdfh</view>-->
+      <!--</view>-->
+    <!--</view>-->
+<!--</view>-->
+
+<view class="container">
+  <image src="/images/list1.png" bindload="imageLoad" style="width:{{imgwidth}}rpx; height:{{imgheight }}rpx;"></image>
+</view>
+

@@ -1,0 +1,229 @@
+/**index.wxss**/
+.container{font-size:30rpx;}
+.head_Search{
+  display: flex;
+  width:710rpx;
+  margin:20rpx auto;
+  height: 80rpx;
+  line-height:80rpx;
+}
+.head_Search .address{
+  width:200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.head_Search .address .img1{
+  width:30rpx;
+  height:30rpx;
+  margin-top:30rpx;
+}
+.head_Search .address span{
+  display: inline-block;
+   height:80rpx;
+   line-height:80rpx;
+    margin:0 10rpx;
+ }
+.head_Search .address .img2{
+  width:15rpx;
+  height:15rpx;
+  vertical-align:top;
+  margin-top:37rpx;
+}
+.head_Search .view_Input{
+  width:510rpx;
+  height:80rpx;
+  display: flex;
+  background:#f0f1f3;
+  border-radius: 5px;
+}
+.head_Search .view_Input input{
+  padding-left:10rpx;
+  width:400rpx;
+  height:80rpx;
+}
+.head_Search .view_Input .search_IMG{
+  width:100rpx;
+  height:80rpx;
+  text-align:center;
+}
+.head_Search .view_Input .search_IMG image{
+  width:40rpx;
+  height:40rpx;
+  margin-top:20rpx;
+}
+.inform{font-size:28rpx;}
+.inform image{
+  width:30rpx;
+  height:30rpx;
+  margin-left:20rpx;
+  margin-right:20rpx;
+  }
+.cFfaf00{color:#ffaf00;}
+/**** 轮播图 ****/
+.swiper_IMG{
+  display: flex;
+  width:710rpx;
+  margin:20rpx auto;
+  height:410rpx;
+  background:#fff;
+  border-radius:10px;
+}
+.swiper_IMG image{
+  width:710rpx;
+  border-radius:10px;
+}
+/* 功能列表*/
+.feature_List{
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+.feature_List .list_Box{
+  width:187.5rpx;
+  text-align: center;
+  margin-top:20rpx;
+  margin-bottom:20rpx;
+}
+.feature_List .list_Box .roundness{
+  width:127.5rpx;
+  margin:0 30rpx;
+  height:127.5rpx;
+  line-height:127.5rpx;
+  border-radius:50%;
+  background:#ffaf00;
+}
+.feature_List .list_Box .roundness image{
+  width:127.5rpx;
+  height:127.5rpx;
+}
+.feature_List .list_Box .text{
+  margin-top:20rpx;
+}
+.home_IMg{
+  width:710rpx;
+  margin:20rpx auto;
+}
+.home_IMg image{
+  width:710rpx;
+}
+/*** 商品列表 ****/
+.home_Nav{
+  display: flex;
+  width:750rpx;
+  height:82rpx;
+  line-height:82rpx;
+  margin:20rpx auto;
+  color:#ccc;
+  font-size:36rpx;
+  text-align:center;
+  border-bottom:1rpx solid #ddd;
+}
+.home_Nav>view{
+  width:355rpx;
+}
+.home_Nav view text{
+  height:80rpx;
+  line-height:80rpx;
+}
+.home_Nav text.active{
+  color:#000;
+  border-bottom:2px solid #ffaf00;
+  display:inline-block;
+}
+.goods_List .layout_LR .layout_Left{
+  width:220rpx;
+  /* margin:20rpx 20rpx 40rpx 20rpx; */
+  margin-left:20rpx;
+  margin-right:40rpx;
+}
+.goods_List .layout_LR .layout_Left image{
+  width:220rpx;
+  height:160rpx;
+}
+.goods_List .layout_LR .layout_Right{
+  text-align:left;
+  width:450rpx;
+  margin-right: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom:1rpx solid #ddd;
+ 
+}
+.goods_List .layout_LR .layout_Right view text.btn{
+  display:inline-block;
+  width:120rpx;
+  padding:2rpx 0;
+  text-align: center;
+  background:#00c670;
+  color: #fff;
+  border-radius: 5px;
+}
+.goods_List .layout_LR .layout_Right .fR image{
+   width:30rpx;
+   height:30rpx;
+  vertical-align: middle;
+  margin-right:10rpx;
+}
+
+
+
+
+
+.layout_LR{width:750rpx;padding:20rpx 0;}
+.layout_LR .layout_Right{width:750rpx;}
+.layout_LR .layout_Right image{
+  width:30rpx;
+  height:30rpx;
+}
+
+.sameLine{
+  display: flex;
+  flex-direction: row;
+  height:100rpx;
+  line-height:100rpx;
+  border-bottom:1rpx solid #999;
+}
+.sameLine .line_Left{
+  width:180rpx;
+  margin-left:20rpx;
+}
+.sameLine .line_Center{
+  width:500rpx;
+}
+.sameLine .line_Right{
+  width:50rpx;
+}
+.sameLine .line_Center input{height:100rpx;line-height: 100rpx;}
+.sameLine .line_Right image{
+  width:30rpx;
+  height:30rpx;
+}
+
+.centerByContent{
+  height: auto;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+}
+.centerByContent .title{
+  margin:auto 0 auto 0;
+  width: 160rpx;
+  color: #7c7c7c;
+}
+.centerByContent .centeredContent{width:560rpx;}
+.centerByContent textarea{
+  box-sizing: border-box;
+  width: 560rpx;
+}
+.centerByContent image{
+  margin:auto 0 auto 0;
+  width: 30rpx;
+  height:30rpx;
+}
+
+.centerByContent .title image{
+  width:100rpx;
+  height:100rpx;
+}
+.centerByContent_Right{margin: auto;}

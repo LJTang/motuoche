@@ -1,0 +1,59 @@
+.classify{
+  width:710rpx;
+  height: 100rpx;
+  line-height:100rpx;
+  margin:0 auto;
+  border-bottom:1rpx solid #ddd;
+  display: flex;
+  text-align: center;
+  color:#999;
+  margin-top:10rpx;
+}
+.classify view{width:236.66rpx;}
+.classify image{
+  width:17rpx;
+  height:15rpx;
+  margin-left:10rpx;
+}
+
+/*****/
+.popUp_Box{
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+}
+.shadow{
+  height:100%;
+  width:100%;
+  position:relative;
+  background:#000;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+  z-index:10;
+}
+.show_Layer{
+  position: absolute;
+  background:#fff;
+  z-index:11;
+  border-radius:0;
+}
+.popUp_Box .classify_Box{
+  width:600rpx;
+  height: 100%;
+  background: #fff;
+  top:0;
+  left:150rpx;
+}
+.popUp_Box .classify_Box .list_Box view{
+  display: inline-block;
+  width:270rpx;
+  height:80rpx;
+  line-height:80rpx;
+  text-align: center;
+  background: #f5f5f5;
+  color:#999;
+  margin:20rpx 0 0 20rpx;
+  border-radius:5px;
+}

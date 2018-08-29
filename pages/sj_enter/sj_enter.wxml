@@ -1,0 +1,83 @@
+<view class="container">
+  <view class="layout_LR">
+    <view class="layout_Left">店铺名称</view>
+    <view class="layout_Right"><input type="text" placeholder-class="place-holder" placeholder="请输入门店的名称（必填）"/></view>
+  </view>
+
+  <view class="layout_LR">
+    <view class="layout_Left">店铺分类</view>
+    <view class="layout_Right"><input class="fL" style="width:96%;" type="text" placeholder-class="place-holder" placeholder="请选择分类" disabled="true" value=""/><view class="fR"><image src="/images/classify.png"></image></view></view>
+  </view>
+
+  <view class="layout_LR">
+    <view class="layout_Left">联系人</view>
+    <view class="layout_Right"><input type="text" placeholder-class="place-holder" placeholder="请输入联系人（必填）"/></view>
+  </view>
+  <view class="layout_LR">
+    <view class="layout_Left">联系电话</view>
+    <view class="layout_Right"><input type="text" placeholder-class="place-holder" placeholder="请输入联系电话（必填）"/></view>
+  </view>
+  <view class="layout_LR">
+    <view class="layout_Left">微信号</view>
+    <view class="layout_Right"><input type="text" placeholder-class="place-holder" placeholder="请输入微信号（必填）"/></view>
+  </view>
+
+  <view class="layout_LR">
+    <view class="layout_Left">详细地址</view>
+    <view class="layout_Right"><input class="fL" style="width:96%;" type="text" placeholder-class="place-holder" placeholder="请选择地址" disabled="true" value=""/><view class="fR"><image src="/images/classify.png"></image></view></view>
+  </view>
+
+  <view class="businessHours">
+    <view class="businessHours_Title">营业时间</view>
+    <view class="businessHours_Center">
+      <view class="fR"><image src="/images/classify.png"></image></view>
+      <picker class="fR" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange_To">
+        <input class="fL" style="width:140rpx;" type="text" placeholder-class="place-holder" placeholder="结束时间" disabled="true" value="{{timeTo}}"/>
+      </picker>
+      <view class="fR"><image src="/images/classify.png"></image><text class="mal20R mar20R">至</text></view>
+      <picker class="fR" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+          <input class="fL" style="width:140rpx;" type="text" placeholder-class="place-holder" placeholder="开始时间" disabled="true" value="{{time}}"/>
+        </picker>
+    </view>
+  </view>
+<view class="w710">
+  <view class="mat30R mab20R"><text>营业范围(必填)</text></view>
+  <view><textarea placeholder="请输入营业范围或购买须知" name="" id="" cols="30" rows="10"></textarea></view>
+
+  <view class="mat30R mab20R"><text>上传证件照</text></view>
+  <view class="photo">
+    <view class="positive view_Img" bindtap="listenerButtonChooseImage" data-index="0"><image src="{{imgURL}}" mode="widthFix"></image></view>
+    <view class="positive view_Img mal20R" bindtap="listenerButtonChooseImage" data-index="1"><image src="{{imgURL2}}" mode="widthFix"></image></view>
+  </view>
+
+  <view class="mat30R mab20R"><text>上传店铺头像</text></view>
+  <view class="photo">
+    <view class="positive view_Img" bindtap="listenerButtonChooseImage" data-index="2"><image src="{{imgURL3}}" mode="widthFix"></image></view>
+  </view>
+</view>
+<view class="h180"></view>
+  <!--<picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">-->
+    <!--<view class="picker">-->
+      <!--当前选择: {{time}}-->
+    <!--</view>-->
+  <!--</picker>-->
+  <view class="footer">
+    <view>
+      <view class="f34R">提交资料</view>
+      <view>（提交后请联系客服咨询费用）</view>
+    </view>
+
+  </view>
+</view>
+
+<view class="popUp_Box" wx:if="{{popUP_Bool}}">
+  <view class="shadow" bindtap="popClose"></view>
+  <view class="show_Layer classify_Box">
+    <view class="list_Box">
+        <view>全部分类</view>
+        <view>全部分类</view>
+        <view>全部分类</view>
+        <view>全部分类</view>
+    </view>
+  </view>
+</view>

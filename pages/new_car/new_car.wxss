@@ -1,0 +1,37 @@
+/*** 商品列表 ****/
+.container{font-size:30rpx;}
+.goods_List .layout_LR{margin-top:40rpx;}
+.goods_List .layout_LR .layout_Left{
+  width:220rpx;
+  margin-left:20rpx;
+  margin-right:40rpx;
+}
+.goods_List .layout_LR .layout_Left image{
+  width:220rpx;
+  height:160rpx;
+}
+.goods_List .layout_LR .layout_Right{
+  text-align:left;
+  width:450rpx;
+  margin-right: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom:1rpx solid #ddd;
+ 
+}
+.goods_List .layout_LR .layout_Right view text.btn{
+  display:inline-block;
+  width:120rpx;
+  padding:2rpx 0;
+  text-align: center;
+  background:#00c670;
+  color: #fff;
+  border-radius: 5px;
+}
+.goods_List .layout_LR .layout_Right .fR image{
+   width:30rpx;
+   height:30rpx;
+  vertical-align: middle;
+  margin-right:10rpx;
+}
+
+@import "../../style/pop.wxss";

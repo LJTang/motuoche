@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/new_car/new_car",
+    "pages/maintain/maintain",
+    "pages/yanghu/yanghu",
+    "pages/merchant/merchant",
+    "pages/sj_enter/sj_enter",
+    "pages/ask_to_buy/ask_to_buy",
+    "pages/ask_details/ask_details",
+    "pages/pop/pop",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffaf00",
+    "navigationBarTitleText": "摩托车交易平台",
+    "navigationBarTextStyle": "#fff"
+  }
+}
