@@ -5,7 +5,7 @@
       <view bindtap="popOpen">车型<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen">价格<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen">排量<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen">筛选<image src="/images/classify.png"></image></view>
+      <view bindtap="popOpen">筛选<image class="filtrate" src="/images/filtrate.png"></image></view>
     </view>
   </view>
 
@@ -15,7 +15,7 @@
       <view class="layout_Right">
         <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
         <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
-        <view class="cC"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+        <view class="cC"><text class="cFFAF00 f30R">￥26540</text><view class="w50_H fR f26R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
       </view>
     </view>
 

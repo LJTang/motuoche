@@ -80,6 +80,15 @@ button{
 button::after{
   border:none;
 }
+
+
+.w710{width:710rpx;margin:0 auto;}
+.w50_H{
+  width:50%;
+  height:50rpx;
+  overflow:hidden;
+  text-align:right;
+}
 /**** 左右布局 *****/
 .layout_LR{
   display: -webkit-box;

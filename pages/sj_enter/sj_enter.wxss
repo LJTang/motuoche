@@ -9,16 +9,16 @@
 .layout_LR{
   width:710rpx;
   margin:0 auto;
-  border-bottom:1rpx solid #ddd;
+  border-bottom:1rpx solid #f1f1f1;
   /* padding:20rpx 0; */
-  height:80rpx;
-  line-height:80rpx;
+  height:100rpx;
+  line-height:100rpx;
 }
 .layout_LR .layout_Left{}
-.layout_LR .layout_Right{}
+.layout_LR .layout_Right{width:510rpx;}
 .layout_LR .layout_Right input{
-  height:80rpx;
-  line-height:80rpx;
+  height:100rpx;
+  line-height:100rpx;
 }
 .layout_LR .layout_Right .from{width:200rpx;}
 .layout_LR .layout_Right .to{width:200rpx;}
@@ -28,16 +28,19 @@
   vertical-align: middle;
 }
 
-.place-holder{font-size:26rpx;}
+.place-holder{
+  font-size:26rpx;
+  color:#ccc
+}
 
 .businessHours{
   width:710rpx;
   margin:0 auto;
   display: flex;
   flex-direction: row;
-  height:80rpx;
-  line-height:80rpx;
-  border-bottom:1rpx solid #ddd;
+  height:100rpx;
+  line-height:100rpx;
+  border-bottom:1rpx solid #f1f1f1;
 }
 .businessHours_Title{
    width:200rpx;
@@ -46,8 +49,8 @@
   width:510rpx;
 }
 .businessHours_Center input{
-  height:80rpx;
-  line-height:80rpx;
+  height:100rpx;
+  line-height:100rpx;
 }
 .businessHours_Center image{
   width:17rpx;

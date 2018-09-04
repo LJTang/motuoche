@@ -37,6 +37,7 @@
         <view class="text">新车</view>
       </view>
     </navigator>
+
     <navigator url="/pages/new_car/new_car" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/used_car.png"></image></view>
@@ -44,10 +45,12 @@
       </view>
     </navigator>
 
+    <navigator url="/pages/equipment/equipment" hover-class="none">
     <view class="list_Box">
       <view class="roundness"><image class="" src="/images/equip.png"></image></view>
       <view class="text">装备</view>
     </view>
+    </navigator>
 
     <navigator url="/pages/yanghu/yanghu" hover-class="none">
       <view class="list_Box">
@@ -56,10 +59,13 @@
       </view>
     </navigator>
 
-    <view class="list_Box">
-      <view class="roundness"><image class="" src="/images/big_car.png"></image></view>
-      <view class="text">大贸车</view>
-    </view>
+    <navigator url="/pages/big_trade_car/big_trade_car" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/big_car.png"></image></view>
+        <view class="text">大贸车</view>
+      </view>
+    </navigator>
+
     <navigator url="/pages/ask_to_buy/ask_to_buy" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/buy_car.png"></image></view>
@@ -73,11 +79,12 @@
         <view class="text">摩托维修</view>
       </view>
     </navigator>
-
-    <view class="list_Box">
-      <view class="roundness"><image class="" src="/images/search_car.png"></image></view>
-      <view class="text">查找车型</view>
-    </view>
+    <navigator url="/pages/search/search" hover-class="none">
+      <view class="list_Box">
+        <view class="roundness"><image class="" src="/images/search_car.png"></image></view>
+        <view class="text">查找车型</view>
+      </view>
+    </navigator>
   </view>
   <!-- 图片 -->
   <view class="home_IMg"><image class="" src="/images/list2.png" mode="widthFix"></image></view>
@@ -88,23 +95,27 @@
   </view>
 
   <view class="goods_List">
-    <view class="layout_LR">
-      <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
-      <view class="layout_Right">
-          <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-          <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
-          <view class="cC"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+    <navigator url="/pages/commodity_details/commodity_details" hover-class="none">
+      <view class="layout_LR">
+        <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+        <view class="layout_Right">
+            <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
+            <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
+            <view class="cC"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+        </view>
       </view>
-    </view>
+    </navigator>
 
-    <view class="layout_LR">
-      <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
-      <view class="layout_Right">
-        <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-        <view class="c9 f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
-        <view class="c9"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+    <navigator url="/pages/business_details/business_details" hover-class="none">
+      <view class="layout_LR">
+        <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+        <view class="layout_Right">
+          <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
+          <view class="c9 f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
+          <view class="c9"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+        </view>
       </view>
-    </view>
+    </navigator>
 
     <view class="pab20" style="height:40px">
       <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
@@ -178,7 +189,6 @@
     </view>
     <view class="line_Right"><image src="/images/arrow-right.png"></image></view>
   </view>
-
 
   <view>
     <view class="layout_LR">

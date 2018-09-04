@@ -50,10 +50,11 @@
   bottom:0;
   text-align: center;
   width: 750rpx;
-  height:80rpx;
-  line-height:80rpx;
+  height:100rpx;
+  line-height:100rpx;
   display: flex;
   font-size:30rpx;
+  font-weight: bold;
   background:#fff;
 }
 .footer view{

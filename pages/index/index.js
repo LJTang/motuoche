@@ -17,9 +17,9 @@ Page({
       nav: [
           { img: "/images/foot_nav1_a.png", url: "/pages/index/index", type:"", text: "首页", on: true },
           { img: "/images/foot_nav2.png", url: "/pages/merchant/merchant", type:"", text: "商家", on: false },
-          { img: "/images/fa.png", url: "/pages/login/login", text: "发布 ", type:"", on: false },
+          { img: "/images/fa.png", url: "/pages/publish/publish", text: "发布 ", type:"", on: false },
           { img: "/images/foot_nav4.png", url:"", text: "客服", type:"contact",on: false },
-          { img: "/images/foot_nav5.png", url: "/pages/my/my", text: "我的", type:"", on: false },
+          { img: "/images/foot_nav5.png", url: "/pages/my_index/my_index", text: "我的", type:"", on: false },
       ],
       indicatorDots: true,
       autoplay: true,
@@ -166,6 +166,10 @@ Page({
         var index=e.currentTarget.dataset.index;
         if(index==3){
             return;
+        }else if(index==2){
+            wx.navigateTo({
+                url:url
+            })
         }else{
             wx.reLaunch({
                 url: url

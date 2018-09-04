@@ -1,13 +1,30 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/my_index/my_index",
     "pages/new_car/new_car",
     "pages/maintain/maintain",
     "pages/yanghu/yanghu",
     "pages/merchant/merchant",
     "pages/sj_enter/sj_enter",
+    "pages/publish/publish",
+    "pages/business_details/business_details",
+    "pages/commodity_details/commodity_details",
     "pages/ask_to_buy/ask_to_buy",
     "pages/ask_details/ask_details",
+    "pages/opinion/opinion",
+    "pages/about_us/about_us",
+    "pages/ll_history/ll_history",
+    "pages/personal_data/personal_data",
+    "pages/my_favorite/my_favorite",
+    "pages/my_publish/my_publish",
+    "pages/store_management/store_management",
+    "pages/sj_information/sj_information",
+    "pages/goods_management/goods_management",
+    "pages/publish_goods/publish_goods",
+    "pages/search/search",
+    "pages/big_trade_car/big_trade_car",
+    "pages/equipment/equipment",
     "pages/pop/pop",
     "pages/logs/logs"
   ],
@@ -15,6 +32,6 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffaf00",
     "navigationBarTitleText": "摩托车交易平台",
-    "navigationBarTextStyle": "#fff"
+    "navigationBarTextStyle": "#000"
   }
 }

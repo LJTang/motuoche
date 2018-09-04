@@ -96,4 +96,27 @@ Page({
             }
         })
     },
+    //选择位置位置
+    chooseLocation:function(e){
+        var that=this
+        wx.chooseLocation({
+            success: function(res){
+                console.log(res)
+                that.setData({
+                    address:res.name,
+                    d_address:res.address,
+                    location:{
+                        longitude:res.longitude,
+                        latitude:res.latitude
+                    }
+                })
+            },
+            fail: function() {
+
+            },
+            complete: function() {
+
+            }
+        })
+    }
 });

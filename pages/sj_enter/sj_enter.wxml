@@ -6,7 +6,14 @@
 
   <view class="layout_LR">
     <view class="layout_Left">店铺分类</view>
-    <view class="layout_Right"><input class="fL" style="width:96%;" type="text" placeholder-class="place-holder" placeholder="请选择分类" disabled="true" value=""/><view class="fR"><image src="/images/classify.png"></image></view></view>
+    <view class="layout_Right">
+      <picker bindchange="bindPickerChange" value="{{objectIndex}}" range="{{address_Array}}" range-key="name">
+        <view class="picker">
+          <input class="fL" style="width:96%;" type="text" placeholder-class="place-holder" placeholder="请选择分类" disabled="true" value=""/><view class="fR"><image src="/images/classify.png"></image></view>
+        </view>
+      </picker>
+      <!--<input class="fL" style="width:96%;" type="text" placeholder-class="place-holder" placeholder="请选择分类" disabled="true" value=""/><view class="fR"><image src="/images/classify.png"></image></view></view>-->
+    </view>
   </view>
 
   <view class="layout_LR">
@@ -31,7 +38,7 @@
     <view class="businessHours_Title">营业时间</view>
     <view class="businessHours_Center">
       <view class="fR"><image src="/images/classify.png"></image></view>
-      <picker class="fR" mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange_To">
+      <picker class="fR" mode="time" value="{{timeTo}}" start="00:00" end="23:59" bindchange="bindTimeChange_To">
         <input class="fL" style="width:140rpx;" type="text" placeholder-class="place-holder" placeholder="结束时间" disabled="true" value="{{timeTo}}"/>
       </picker>
       <view class="fR"><image src="/images/classify.png"></image><text class="mal20R mar20R">至</text></view>
