@@ -1,7 +1,7 @@
 /*** 商品列表 ****/
 .container{font-size:30rpx;}
 
-.goods_List .layout_LR{margin-top:40rpx;}
+.goods_List .layout_LR{padding-top:40rpx;}
 .goods_List .layout_LR .layout_Left{
   width:220rpx;
   margin-left:20rpx;
@@ -28,9 +28,9 @@
   color: #fff;
   border-radius: 5px;
 }
-.goods_List .layout_LR .layout_Right .fL image{
-   width:30rpx;
-   height:30rpx;
+.goods_List .layout_LR .layout_Right .fR image{
+  width:30rpx;
+  height:30rpx;
   vertical-align: middle;
   margin-right:10rpx;
 }

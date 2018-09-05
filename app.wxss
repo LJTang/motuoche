@@ -30,6 +30,8 @@ page{height:100%;}
 .pat10R{padding-top: 10rpx;}
 .pat20R{padding-top:20rpx;}
 
+.pab20R{padding-bottom:20rpx;}
+
 .mab10R{margin-bottom:10rpx;}
 .mab100R{margin-bottom:100rpx;}
 
@@ -88,6 +90,16 @@ button::after{
   height:50rpx;
   overflow:hidden;
   text-align:right;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.h120{height:120rpx;}
+.h50{height:50rpx;}
+
+.middle_line{
+  width:450rpx;
+  height:55rpx;
+  line-height:55rpx;
 }
 /**** 左右布局 *****/
 .layout_LR{

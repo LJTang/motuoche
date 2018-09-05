@@ -38,7 +38,7 @@
       </view>
     </navigator>
 
-    <navigator url="/pages/new_car/new_car" hover-class="none">
+    <navigator url="/pages/used_car/used_car" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/used_car.png"></image></view>
         <view class="text">二手车</view>
@@ -117,14 +117,15 @@
       </view>
     </navigator>
 
-    <view class="pab20" style="height:40px">
+    <view class="pat20R pab20R">
       <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
       <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
       <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
       <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
     </view>
-  </view>
 
+  </view>
+  <view class="h120"></view>
   <!-- 导航栏 -->
   <view class='home_Footer container'>
     <block wx:for="{{nav}}" wx:for-item="list" wx:key="">
@@ -135,82 +136,6 @@
     </block>
   </view>
 
-
-  <view class="layout_LR">
-    <view class="layout_Left">left</view>
-    <view class="layout_Right">right</view>
-  </view>
-
-  <view class="layout_LR">
-    <view class="layout_Left">left</view>
-    <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
-  </view>
-
-  <view class="sameLine">
-    <view class="line_Left">left</view>
-    <view class="line_Center">center</view>
-    <view class="line_Right"><image src="/images/arrow-right.png"></image></view>
-  </view>
-
-  <view class="centerByContent">
-    <view class="title">详细地址</view>
-    <view class="centeredContent">
-      <!--<input class="input" type="text" placeholder="街道门牌信息"/>-->
-      <textarea name="address" auto-height placeholder="请输入" bindinput='getFocus' data-statu="textarea" value="{{address}}"/>
-    </view>
-    <view class="display_F"><image src="/images/arrow-right.png" mode=""></image></view>
-  </view>
-
-  <view class="centerByContent">
-    <view class="title">详细地址</view>
-    <view class="centeredContent">
-      <view>当然更好地发挥UI和GV金牛几把UIBHV持续举报好，计划表，。就好</view>
-    </view>
-    <view class="display_F"><image src="/images/arrow-right.png" mode=""></image></view>
-  </view>
-
-  <view class="centerByContent">
-    <view class="title display_F"><image src="/images/list1.png" mode=""></image></view>
-    <view class="centeredContent">
-      <view class="f32R">当然更好地发挥UI和</view>
-      <view class="f28R">当然更好地发挥UI和GV金牛几ghkhjkgjlktrutyu把UIBHV持续举报好，计划表，。就好</view>
-    </view>
-    <view class="centerByContent_Right">uhkgjyujk</view>
-  </view>
-
-  <view class="sameLine">
-    <view class="line_Left">单行滑动</view>
-    <view class="line_Center">
-      <picker bindchange="bindPickerChange" value="{{objectIndex}}" range="{{address_Array}}" range-key="name">
-        <view class="picker">
-          <input type="text" placeholder-style="line-height:100rpx;" placeholder="请选择地址" value="{{city}}" disabled="true"/>
-        </view>
-      </picker>
-    </view>
-    <view class="line_Right"><image src="/images/arrow-right.png"></image></view>
-  </view>
-
-  <view>
-    <view class="layout_LR">
-      <view class="layout_Left">toggle</view>
-      <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
-    </view>
-
-    <view>
-      <view class="layout_LR">
-        <view class="layout_Left">1</view>
-        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
-      </view>
-      <view class="layout_LR">
-        <view class="layout_Left">2</view>
-        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
-      </view>
-      <view class="layout_LR">
-        <view class="layout_Left">3</view>
-        <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
-      </view>
-    </view>
-  </view>
 </view>
 
 <view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">

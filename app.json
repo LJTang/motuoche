@@ -25,6 +25,7 @@
     "pages/search/search",
     "pages/big_trade_car/big_trade_car",
     "pages/equipment/equipment",
+    "pages/used_car/used_car",
     "pages/pop/pop",
     "pages/logs/logs"
   ],

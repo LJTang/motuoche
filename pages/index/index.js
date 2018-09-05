@@ -5,7 +5,6 @@ var  qqmapsdk;
 const app = getApp();
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -96,7 +95,7 @@ Page({
                   var accuracy = res.accuracy;
 
                   qqmapsdk = new QQMap({
-                      key: 'OX4BZ-M7UKU-HQJVB-2WYDC-BAPLT-KFBSF'
+                      key: 'GNSBZ-MHQKU-IIHV5-4XEDU-MR76T-5JB2F'
                   });
                   // 39.984060,116.307520
                   qqmapsdk.reverseGeocoder({

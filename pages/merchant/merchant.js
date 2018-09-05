@@ -118,7 +118,14 @@ Page({
                   });
               }
           });
-      // 实例化API核心类
+      wx.getSystemInfo({
+          success: function(res) {
+              var rpx=(res.windowWidth / 750);
+              that.setData({
+                  height:res.windowHeight-(rpx*340)
+              });
+          }
+      });
       wx.setNavigationBarTitle({
           title: '商家'
       });
