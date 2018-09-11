@@ -11,6 +11,8 @@
     <!--<text class="user-motto">{{motto}}</text>-->
   <!--</view>-->
 <!--</view>-->
+<wxs module="filter" src="../../utils/common.wxs"></wxs>
+<!--{{filter.twoDecimalPlaces(orderdata.originalPrice - orderdata.actualPrice)}}-->
 <view class="container">
   <view class="head_Search">
     <view class="address"><image class="img1" src="/images/top_address.png"></image><span class="v_align_T"> {{city}} </span><image class="img2" src="/images/san.png"></image></view>
@@ -138,7 +140,8 @@
 
 </view>
 
-<view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">
+<!-- <view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}"> -->
+<view class="popUp_Box" hidden="true">
   <view class="shadow"></view>
   <view class="show_Layer authorized_Box">
     <view class="">

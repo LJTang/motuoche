@@ -80,12 +80,33 @@ textarea{
   text-align: center;
   margin:auto;
 }
-.footer>view{
+.footer>button{
   width:710rpx;
   background:#ffaf00;
   text-align: center;
   margin:20rpx;
   border-radius:5px;
+  height: 100rpx;
+  line-height:100rpx;
+  color:#000;
+}
+.footer button view:first-child{
+  width:710rpx;
+  background:#ffaf00;
+  text-align: center;
+  border-radius:5px;
+  height:60rpx;
+  line-height:70rpx;
+  font-size:32rpx;
+}
+.footer button view:last-child{
+  width:710rpx;
+  background:#ffaf00;
+  text-align: center;
+  border-radius:5px;
+  height:40rpx;
+  line-height:30rpx;
+  font-size:28rpx;
 }
 
 

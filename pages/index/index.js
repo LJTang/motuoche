@@ -26,24 +26,8 @@ Page({
       duration: 1000,
       active:0,zx_list:[],
       jl_list:[],
-      address_Array: [
-          {
-              id: 0,
-              name: '美国'
-          },
-          {
-              id: 1,
-              name: '中国'
-          },
-          {
-              id: 2,
-              name: '巴西'
-          },
-          {
-              id: 3,
-              name: '日本'
-          }
-      ],
+      address_Array: [],
+      location:{},
       city:''
   },
   //事件处理函数
@@ -58,6 +42,7 @@ Page({
         // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
     },
   onLoad: function () {
+      console.log(2222)
       var that = this;
         if (app.globalData.userInfo) {
           this.setData({
@@ -93,11 +78,17 @@ Page({
                   lon = res.longitude;
                   var speed = res.speed;
                   var accuracy = res.accuracy;
+                  that.setData({
+                      location:{
+                          latitude: res.latitude,
+                          longitude: res.longitude
+                      }
+                  });
 
                   qqmapsdk = new QQMap({
-                      key: 'GNSBZ-MHQKU-IIHV5-4XEDU-MR76T-5JB2F'
+                    key: 'F4BBZ-AEFLP-2GDDZ-L6G57-KP3A2-CDF3L'
                   });
-                  // 39.984060,116.307520
+
                   qqmapsdk.reverseGeocoder({
                       location: {
                           latitude: lat,
@@ -106,7 +97,13 @@ Page({
                       success: function(res) {
                           that.setData({
                               city:res.result.address_component.city
-                          })
+                          });
+                          app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,city:that.data.city,juli:'',page:1},'GET').then((res)=>{
+                              that.setData({
+
+                              })
+                          }).catch((errMsg) => {
+                          });
                       },
                       fail: function(res) {
 
@@ -122,19 +119,14 @@ Page({
   },
 
     onShow: function () {
-        // 调用接口
-        // qqmapsdk.search({
-        //     keyword: '酒店',
-        //     success: function (res) {
-        //         console.log(res);
-        //     },
-        //     fail: function (res) {
-        //         console.log(res);
-        //     },
-        //     complete: function (res) {
-        //         console.log(res);
-        //     }
-        // });
+      var that=this;
+      console.log(that.data.location.longitude)
+        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,city:that.data.city,juli:'',page:1},'GET').then((res)=>{
+            that.setData({
+
+            })
+        }).catch((errMsg) => {
+        });
     },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo;
