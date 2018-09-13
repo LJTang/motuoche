@@ -2,98 +2,79 @@
   <view class="nav bgFFF">
     <view class="classify">
       <view bindtap="popOpen" data-text="品牌" data-statu="0">品牌<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen" data-text="车型" data-statu="1">车型<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen" data-text="价格" data-statu="1">价格<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen" data-text="排量" data-statu="1">排量<image src="/images/classify.png"></image></view>
+      <view bindtap="popOpen" data-text="价格排序" data-statu="1">价格排序<image src="/images/classify.png"></image></view>
+      <view bindtap="popOpen" data-text="价格" data-statu="2">价格<image src="/images/classify.png"></image></view>
+      <view bindtap="popOpen" data-text="排量" data-statu="3">排量<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen" data-text="筛选" data-statu="0">筛选<image class="filtrate" src="/images/filtrate.png"></image></view>
     </view>
   </view>
 
   <scroll-view class="mat10" scroll-y style="height:{{height}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-top="{{scrollTop}}">
     <view class="goods_List">
-      <navigator url="/pages/business_details/business_details" hover-class="none">
-        <view class="layout_LR">
-          <view class="layout_Left"><image src="/images/motuo.png" mode="widthFix"></image></view>
-          <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-            <view class="cC f28R middle_line">
-              <text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text>
+      <block wx:for="{{new_List}}" wx:key="{{index}}">
+        <navigator url="/pages/commodity_details/commodity_details?id={{item.id}}" hover-class="none">
+          <view class="layout_LR">
+            <view class="layout_Left"><image src="{{item.goods_img}}" mode="widthFix"></image></view>
+            <view class="layout_Right">
+              <view class="h50"><text class="f34R d_Text">{{item.goods_name}}</text> <text class="btn fR">出售</text></view>
+              <view class="cC f28R middle_line">
+                <text class="f28R">{{item.miles}}公里/{{item.year}}年</text> <text class="fR">{{item.created_at}}</text>
+              </view>
+              <view class="cC"><text class="cFFAF00 f30R">￥{{item.goods_price}}</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
             </view>
-            <view class="cC"><text class="cFFAF00 f30R">￥26540</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
           </view>
-        </view>
-      </navigator>
-      <!--widthFix-->
-      <navigator url="/pages/business_details/business_details" hover-class="none">
-        <view class="layout_LR">
-          <view class="layout_Left"><image src="/images/motuo.png" mode="widthFix"></image></view>
-          <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-            <view class="cC f28R middle_line">
-              <text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text>
-            </view>
-            <view class="cC"><text class="cFFAF00 f30R">￥26540</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
-          </view>
-        </view>
-      </navigator>
+        </navigator>
+      </block>
 
-
-      <view class="pab20" style="height:40px">
-        <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
-        <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
-        <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
-        <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
+      <view class="pat20R pab20R">
+        <view class="toLoadMore" hidden="{{inLoadHidden}}" bindtap="onGetConnect">查看更多</view>
+        <view class="noLoadMore center" hidden="{{noMoreHidden}}">没有更多了</view>
       </view>
     </view>
   </scroll-view>
+
 </view>
 
 <view class="popUp_Box" wx:if="{{popUP_Bool}}">
   <view class="shadow" bindtap="popClose"></view>
   <view class="show_Layer classify_Box">
     <view class="title">{{title}}</view>
+    <!--<view class="list_Box" hidden="{{b_Status==0?false:true}}" style="height:{{height}}px;overflow:auto;">-->
+      <!--<block wx:for="{{brand_list}}" wx:key="{{index}}">-->
+        <!--<view bindtap="bindBrand" data-id="{{item.id}}">{{item.brand_name}}</view>-->
+      <!--</block>-->
+    <!--</view>-->
+
     <view class="list_Box" hidden="{{b_Status==1?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view>全部分类</view>
-      <view>全部分类</view>
-      <view>全部分类</view>
-      <view>全部分类</view>
+      <view bindtap="sort_Type" data-id="price_desc">价格降序</view>
+      <view bindtap="sort_Type" data-id="price_asc">价格升序</view>
     </view>
+
+    <view class="list_Box" hidden="{{b_Status==2?false:true}}" style="height:{{height}}px;overflow:auto;">
+      <view bindtap="onCost" data-min="1" data-max="1000">1-1000</view>
+      <view bindtap="onCost" data-min="1001" data-max="2000">1001-2000</view>
+      <view bindtap="onCost" data-min="2001" data-max="3000">2001-3000</view>
+      <view bindtap="onCost" data-min="3001" data-max="4000">3001-4000</view>
+      <view bindtap="onCost" data-min="4001" data-max="5000">4001-5000</view>
+      <view bindtap="onCost" data-min="5001" data-max="6000">5001-6000</view>
+    </view>
+
+    <view class="list_Box" hidden="{{b_Status==3?false:true}}" style="height:{{height}}px;overflow:auto;">
+      <view bindtap="displacement" data-min="124" data-max="">124cc</view>
+      <view bindtap="displacement" data-min="125" data-max="249">125cc-249cc</view>
+      <view bindtap="displacement" data-min="250" data-max="399">250cc-399cc</view>
+      <view bindtap="displacement" data-min="400" data-max="599">400cc-599cc</view>
+      <view bindtap="displacement" data-min="600" data-max="999">600cc-999cc</view>
+      <view bindtap="displacement" data-min="1000" data-max="">1000以上</view>
+    </view>
+
     <view class="brand_Box"  hidden="{{b_Status==0?false:true}}" style="height:{{height}}px;">
-
-      <view class="az_list">
-        <view class="az_box"><text>#</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
-
-      <view class="az_list">
-        <view class="az_box"><text>A</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
-
-      <view class="az_list">
-        <view class="az_box"><text>B</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
-      <view class="az_list">
-        <view class="az_box"><text>C</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
-
-      <view class="az_list">
-        <view class="az_box"><text>D</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
-
-      <view class="az_list">
-        <view class="az_box"><text>E</text></view>
-        <view class="az_text"><text>5555</text></view>
-        <view class="az_text"><text>5555</text></view>
-      </view>
+      <block wx:for="{{brand}}" wx:for-item="list" wx:key="{{index}}">
+        <view class="az_list">
+          <view class="az_box"><text>{{list.pinyin}}</text></view>
+          <view class="az_text" wx:for="{{list.name}}" data-id="{{item.id}}" bindtap="bindBrand"><text>{{item.brand_name}}</text></view>
+        </view>
+      </block>
     </view>
   </view>
 </view>

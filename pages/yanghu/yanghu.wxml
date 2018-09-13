@@ -1,33 +1,22 @@
 <view class="container">
   <scroll-view class="mat10" scroll-y style="height:{{height}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-top="{{scrollTop}}">
     <view class="goods_List">
-      <navigator url="/pages/business_details/business_details" hover-class="none">
+      <block wx:for="{{y_List}}" wx:key="{{index}}">
+      <navigator url="/pages/commodity_details/commodity_details?id={{item.id}}" hover-class="none">
         <view class="layout_LR">
-          <view class="layout_Left"><image src="/images/motuo.png" mode="widthFix"></image></view>
+          <view class="layout_Left"><image src="{{item.goods_img}}" mode="widthFix"></image></view>
           <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">雅马哈T-1085</text> <text class="fR">···</text></view>
+            <view class="h50"><text class="f34R d_Text">{{item.goods_name}}</text> <text class="fR">···</text></view>
             <view class="middle_line"></view>
-            <view class="cC"><text class="cFFAF00 f30R">￥26540</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
+            <view class="cC"><text class="cFFAF00 f30R">￥{{item.goods_price}}</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
           </view>
         </view>
       </navigator>
-      <!--widthFix-->
-      <navigator url="/pages/business_details/business_details" hover-class="none">
-        <view class="layout_LR">
-          <view class="layout_Left"><image src="/images/motuo.png" mode="widthFix"></image></view>
-          <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">雅马哈T-1085</text> <text class="fR">···</text></view>
-            <view class="middle_line"></view>
-            <view class="cC"><text class="cFFAF00 f30R">￥26540</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
-          </view>
-        </view>
-      </navigator>
+      </block>
 
-      <view class="pab20" style="height:40px">
-        <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
-        <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
-        <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
-        <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
+      <view class="pat20R pab20R">
+        <view class="toLoadMore" hidden="{{inLoadHidden}}" bindtap="onGetConnect">查看更多</view>
+        <view class="noLoadMore center" hidden="{{noMoreHidden}}">没有更多了</view>
       </view>
     </view>
   </scroll-view>

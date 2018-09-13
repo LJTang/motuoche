@@ -81,12 +81,13 @@ button{
 }
 button::after{
   border:none;
+  background:none;
 }
 
 
 .w710{width:710rpx;margin:0 auto;}
 .w50_H{
-  width:50%;
+  width:60%;
   height:50rpx;
   overflow:hidden;
   text-align:right;
@@ -289,4 +290,8 @@ button::after{
 }
 button::after{
   border:none;
+}
+.noLoadMore{
+  padding:20rpx 0;
+  color:#999;
 }

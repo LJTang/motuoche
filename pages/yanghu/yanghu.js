@@ -6,7 +6,12 @@ const app = getApp();
 Page({
   data: {
       popUP_Bool: false,
-      height:null
+      height:null,
+      intPageIndex:1,
+      y_List:[],
+      loadMoreHidden: true,
+      noMoreHidden: true,
+      inLoadHidden: true
   },
   //事件处理函数
     cutNav: function (e) {
@@ -14,8 +19,6 @@ Page({
         var current = e.currentTarget.dataset.index;
         this.setData({
             active: current,
-            zx_list:[],
-            jl_list:[]
         });
         // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
     },
@@ -35,6 +38,59 @@ Page({
   },
 
     onShow: function () {
+        this.doSendMsg();
+    },
+    doSendMsg:function(){
+        var that=this;
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var json={
+            paixu:'',
+            brand_id:4,
+            min_price:'',
+            max_price:'',
+            year:'',
+            min_miles:'',
+            max_miles:'',
+            address:'',
+            goods_form:'',
+            min_pl:'',
+            max_pl:'',
+            page:that.data.intPageIndex,
+        };
+        app.doSend('goods_list',json,'GET').then((res)=>{
+            if (res.status_code== 200) {
+                if (res.data.last_page >= that.data.intPageIndex) {
+                    var goods = that.data.y_List;
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        y_List: goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                } else {
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+        }).catch((errMsg) =>{});
 
     },
     // 关闭
@@ -71,5 +127,61 @@ Page({
             })
         }
 
+    },
+    onGetConnect:function (){
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var that=this;
+        var json={
+            paixu:'',
+            brand_id:4,
+            min_price:'',
+            max_price:'',
+            year:'',
+            min_miles:'',
+            max_miles:'',
+            address:'',
+            goods_form:'',
+            min_pl:'',
+            max_pl:'',
+            cat_id:'',
+            page:'',
+        };
+        app.doSend('goods_list',json,'GET').then((res)=>{
+            if (res.data.status_code== 200) {
+                if(res.data.last_page>= that.data.intPageIndex){
+                    var goods=that.data.y_List;
+                    for(var i=0;i<res.data.goods.length;i++){
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        y_List:goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                }else{
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+
+            console.log(that.data.noMoreHidden)
+        }).catch((errMsg) => {
+        });
     }
 });

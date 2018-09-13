@@ -25,37 +25,25 @@ Page({
       autoplay: true,
       interval: 5000,
       duration: 1000,
-      active:0,zx_list:[],
-      jl_list:[],
-      address_Array: [
-          {
-              id: 0,
-              name: '美国'
-          },
-          {
-              id: 1,
-              name: '中国'
-          },
-          {
-              id: 2,
-              name: '巴西'
-          },
-          {
-              id: 3,
-              name: '日本'
-          }
-      ],
-      city:''
+      active:0,
+      merchant_List:[],
+      shop_cat:[],
+      city:'',
+      location:{},
+      loadMoreHidden: true,
+      noMoreHidden: true,
+      inLoadHidden:false,
+      cat_id:'',
+      sort:'',
+      intPageIndex:1
   },
   //事件处理函数
     cutNav: function (e) {
         var that = this;
         var current = e.currentTarget.dataset.index;
         this.setData({
-            active: current,
-            zx_list:[],
-            jl_list:[]
-        });
+            active: current
+    });
         // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
     },
   onLoad: function () {
@@ -66,8 +54,6 @@ Page({
             hasUserInfo: true
           })
         } else if (this.data.canIUse){
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
           app.userInfoReadyCallback = res => {
             this.setData({
               userInfo: res.userInfo,
@@ -75,7 +61,6 @@ Page({
             })
           }
         } else {
-          // 在没有 open-type=getUserInfo 版本的兼容处理
           wx.getUserInfo({
             success: res => {
               app.globalData.userInfo = res.userInfo;
@@ -86,38 +71,6 @@ Page({
             }
           })
         }
-        var lon,lat;
-        wx.getLocation({
-              type: 'wgs84',
-              success: function(res) {
-                  lat = res.latitude;
-                  lon = res.longitude;
-                  var speed = res.speed;
-                  var accuracy = res.accuracy;
-
-                  qqmapsdk = new QQMap({
-                      key: 'OX4BZ-M7UKU-HQJVB-2WYDC-BAPLT-KFBSF'
-                  });
-                  // 39.984060,116.307520
-                  qqmapsdk.reverseGeocoder({
-                      location: {
-                          latitude: lat,
-                          longitude:lon
-                      },
-                      success: function(res) {
-                          that.setData({
-                              city:res.result.address_component.city
-                          })
-                      },
-                      fail: function(res) {
-
-                      },
-                      complete: function(res) {
-
-                      }
-                  });
-              }
-          });
       wx.getSystemInfo({
           success: function(res) {
               var rpx=(res.windowWidth / 750);
@@ -129,9 +82,63 @@ Page({
       wx.setNavigationBarTitle({
           title: '商家'
       });
+      that.setData({
+          merchant_List:[]
+      });
+      app.location().then((res)=>{
+          that.setData({
+              city:res.result.address_component.city,
+              location:{
+                  latitude:res.result.location.lat,
+                  longitude:res.result.location.lng
+              }
+          });
+          this.doSendMsg();
+      }).catch((errMsg) =>{});
   },
 
     onShow: function () {
+
+    },
+    doSendMsg:function(){
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var that=this;
+        app.doSend('business',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,cat_id:that.data.cat_id,page:1,sort:that.data.sort},'GET').then((res)=>{
+            if (res.status_code== 200) {
+                if (res.data.last_page >= that.data.intPageIndex) {
+                    var goods = that.data.merchant_List;
+                    for (var i = 0; i < res.data.shop.length; i++) {
+                        goods.push(res.data.shop[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        merchant_List: goods,
+                        shop_cat: res.data.shop_cat,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                } else {
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+        }).catch((errMsg) => {
+        });
 
     },
   getUserInfo: function(e) {
@@ -154,14 +161,15 @@ Page({
         });
     },
     //选择
-    bindPickerChange: function(e) {
+    bindSelectionSort: function(e) {
         var that=this;
-        var index=parseInt(e.detail.value);
-        var list=this.data.address_Array;
-        this.setData({
-            address_id:list[index].id,
-            city:list[index].name
+        var id=e.currentTarget.dataset.id;
+        that.setData({
+            cat_id:id,
+            merchant_List:[]
         });
+        this.popClose();
+        this.onGetConnect();
     },
     jump:function (e) {
         var url=e.currentTarget.dataset.url;
@@ -178,5 +186,76 @@ Page({
             })
         }
 
+    },
+
+    //
+    onToggle:function(e){
+        this.setData({
+            merchant_List:[],
+            shop_cat:[],
+            intPageIndex:1,
+            sort:'desc'
+        });
+    },
+    upper: function(e) {},
+    lower: function(e) {
+
+        if(this.data.last_page>this.data.intPageIndex){
+            this.setData({
+                shop_cat:[]
+            });
+            this.onGetConnect();
+        }else{
+            this.setData({
+                loadMoreHidden: true,
+                noMoreHidden: false,
+                inLoadHidden: true
+            });
+        }
+
+    },
+    scroll: function() {},
+    tap: function (e){},
+    tapMove: function (e){},
+    onGetConnect:function (){
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var that=this;
+        app.doSend('business',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,cat_id:that.data.cat_id,page:that.data.intPageIndex,sort:that.data.sort},'GET').then((res)=>{
+            if (res.data.status_code== 200) {
+                if(res.data.last_page>= that.data.intPageIndex){
+                    var goods=that.data.merchant_List;
+                    for(var i=0;i<res.data.shop.length;i++){
+                        goods.push(res.data.shop[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        merchant_List:goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                }else{
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+
+            console.log(that.data.noMoreHidden)
+        }).catch((errMsg) => {
+        });
     }
 });

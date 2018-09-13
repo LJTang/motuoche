@@ -14,30 +14,30 @@
   <view class="nav bgFFF">
     <view class="classify">
       <view bindtap="popOpen">全部分类<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen">综合排序<image src="/images/classify.png"></image></view>
+      <view bindtap="onToggle">综合排序<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen">地区<image src="/images/classify.png"></image></view>
     </view>
   </view>
 
 
-  <scroll-view class="mat10" scroll-y style="height:{{height}}px;background:#fff;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-top="{{scrollTop}}">
+  <scroll-view class="mat10" scroll-y style="height:{{height}}px;background:#fff;" bindscrolltoupper="upper" bindscrolltolower="lower">
     <view class="goods_List bgFFF">
-      <navigator url="/pages/business_details/business_details" hover-class="none">
-        <view class="layout_LR">
-          <view class="layout_Left"><image src="/images/motuo.png" mode="widthFix"></image></view>
-          <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">雅马哈T-1085</text> <text class="fR">···</text></view>
-            <view class="middle_line"></view>
-            <view class="cC"><view class="fL w50_H" style="text-align:left;"><image src="/images/h_addrsess.png"></image>高端大气</view><text class="fR">￥26540</text></view>
+      <block wx:for="{{merchant_List}}" wx:key="{{index}}">
+        <navigator url="/pages/business_details/business_details?id={{item.id}}" hover-class="none">
+          <view class="layout_LR">
+            <view class="layout_Left"><image src="{{item.business_img}}" mode="widthFix"></image></view>
+            <view class="layout_Right">
+              <view class="h50"><text class="f34R d_Text">{{item.shop_name}}</text> <text class="fR">···</text></view>
+              <view class="middle_line c9 f28R">营业时间{{item.business_start}}-{{item.business_end}}</view>
+              <view class="cC"><view class="fL w50_H" style="text-align:left;"><image src="/images/h_addrsess.png"></image>{{item.address}}</view><text class="fR">{{item.juli}}km</text></view>
+            </view>
           </view>
-        </view>
-      </navigator>
+        </navigator>
+      </block>
 
       <view  class="pat20R pab20R">
-        <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
-        <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
-        <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
-        <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
+        <view class="toLoadMore" hidden="{{inLoadHidden}}" bindtap="onGetConnect">查看更多</view>
+        <view class="noLoadMore center" hidden="{{noMoreHidden}}">没有更多了</view>
       </view>
     </view>
   </scroll-view>
@@ -57,10 +57,10 @@
   <view class="shadow" bindtap="popClose"></view>
   <view class="show_Layer classify_Box">
     <view class="list_Box">
-        <view>全部分类</view>
-        <view>全部分类</view>
-        <view>全部分类</view>
-        <view>全部分类</view>
+      <block wx:for="{{shop_cat}}" wx:key="{{index}}">
+        <view bindtap="bindSelectionSort" data-id="{{item.id}}">{{item.cat_name}}</view>
+      </block>
+
     </view>
   </view>
 </view>

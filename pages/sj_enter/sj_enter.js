@@ -34,6 +34,7 @@ Page({
           title: '商家入驻'
       });
       app.post('shop','','GET').then((res) => {
+
         that.setData({
             sj_Array:res
         })
@@ -86,7 +87,7 @@ Page({
             sourceType: ['album', 'camera'],
             //成功时会回调
             success: function(res){
-                console.log(res.tempFilePaths[0])
+                console.log(res.tempFilePaths[0]);
                 if(index==0){
                     that.setData({
                         imgURL:res.tempFilePaths[0]
@@ -130,10 +131,7 @@ Page({
                 });
                 */
             }
-
-
         })
-
     },
     //选择位置位置
     chooseLocation:function(e){

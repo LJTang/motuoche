@@ -23,45 +23,45 @@
   </view>
 <!-- 轮播图 -->
   <swiper class="swiper_IMG" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+    <block wx:for="{{banner}}" wx:key="{{index}}">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" mode="widthFix"/>
+        <image src="{{item.ad_img}}" class="slide-image" mode="widthFix"/>
       </swiper-item>
     </block>
   </swiper>
 
-  <view class="inform"><image src="/images/trumpet.png"></image><text>浏览：</text><text class="mal20R mar20R"><text class="cFfaf00">5.78</text>万</text><text>发布：</text><text class="cFfaf00 mal20R mar20R">3456</text><text>商家：</text><text class="cFfaf00 mal20R mar20R">1245</text></view>
+  <view class="inform"><image src="/images/trumpet.png"></image><text>浏览：</text><text class="mal20R mar20R"><text class="cFfaf00">{{notice.visit}}</text></text><text>发布：</text><text class="cFfaf00 mal20R mar20R">{{notice.release}}</text><text>商家：</text><text class="cFfaf00 mal20R mar20R">{{notice.business}}</text></view>
   <!-- 功能列表 -->
   <view class="feature_List">
-    <navigator url="/pages/new_car/new_car" hover-class="none">
+    <navigator url="/pages/new_car/new_car?id=1" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/n_car.png"></image></view>
         <view class="text">新车</view>
       </view>
     </navigator>
 
-    <navigator url="/pages/used_car/used_car" hover-class="none">
+    <navigator url="/pages/used_car/used_car?id=2" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/used_car.png"></image></view>
         <view class="text">二手车</view>
       </view>
     </navigator>
 
-    <navigator url="/pages/equipment/equipment" hover-class="none">
+    <navigator url="/pages/equipment/equipment?id=3" hover-class="none">
     <view class="list_Box">
       <view class="roundness"><image class="" src="/images/equip.png"></image></view>
       <view class="text">装备</view>
     </view>
     </navigator>
 
-    <navigator url="/pages/yanghu/yanghu" hover-class="none">
+    <navigator url="/pages/yanghu/yanghu?id=4" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/maintain.png"></image></view>
         <view class="text">养护及其他</view>
       </view>
     </navigator>
 
-    <navigator url="/pages/big_trade_car/big_trade_car" hover-class="none">
+    <navigator url="/pages/big_trade_car/big_trade_car?id=5" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/big_car.png"></image></view>
         <view class="text">大贸车</view>
@@ -89,44 +89,36 @@
     </navigator>
   </view>
   <!-- 图片 -->
-  <view class="home_IMg"><image class="" src="/images/list2.png" mode="widthFix"></image></view>
+  <view class="home_IMg"><image class="" src="{{banner_mid.ad_img}}" mode="widthFix"></image></view>
 
   <view class="home_Nav">
     <view bindtap="cutNav" data-index="0"><text class="{{active==0?'active':''}}">最新上架</text></view>
     <view bindtap="cutNav" data-index="1"><text class="{{active==1?'active':''}}">距离最近</text></view>
   </view>
 
-  <view class="goods_List">
-    <navigator url="/pages/commodity_details/commodity_details" hover-class="none">
-      <view class="layout_LR">
-        <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
-        <view class="layout_Right">
-            <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-            <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
-            <view class="cC"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
-        </view>
-      </view>
-    </navigator>
+  <!--style="height:{{height}}px;"-->
+  <scroll-view class="mat10" scroll-y style="height:{{height}}px;" bindscrolltoupper="upper" bindscrolltolower="lower">
+    <view class="goods_List">
+      <block wx:for="{{home_Goods}}" wx:key="{{index}}">
+        <navigator url="/pages/commodity_details/commodity_details?id={{item.id}}" hover-class="none">
+          <view class="layout_LR">
+            <view class="layout_Left"><image src="{{item.goods_img}}" mode=""></image></view>
+            <view class="layout_Right">
+              <view><text class="f34R">{{item.goods_name}}</text> <text class="btn fR">出售</text></view>
+              <view class="cC f28R" style="line-height:80rpx;"><text class="f28R">{{item.miles}}/{{item.year}}年</text> <text class="fR">{{item.created_at}}</text></view>
+              <view class="cC"><text class="cFFAF00">￥{{item.goods_price}}</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
+            </view>
+          </view>
+        </navigator>
+      </block>
 
-    <navigator url="/pages/business_details/business_details" hover-class="none">
-      <view class="layout_LR">
-        <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
-        <view class="layout_Right">
-          <view><text class="f34R">雅马哈T-1085</text> <text class="btn fR">出售</text></view>
-          <view class="c9 f28R" style="line-height:80rpx;"><text class="f28R">1-3000公里/2017年</text> <text class="fR">几个小时</text></view>
-          <view class="c9"><text class="cFFAF00">￥26540</text><view class="fR f28R"><image src="/images/h_addrsess.png"></image>高端大气</view></view>
-        </view>
+      <view class="pat20R pab20R">
+        <view class="toLoadMore" hidden="{{inLoadHidden}}" bindtap="onGetConnect">查看更多</view>
+        <view class="noLoadMore center" hidden="{{noMoreHidden}}">没有更多了</view>
       </view>
-    </navigator>
 
-    <view class="pat20R pab20R">
-      <!--<view class="noMoreData" hidden="{{noMoreHidden}}">没有更多了</view>-->
-      <!--<view class="inLoad pat20 pab20" hidden="{{inLoadHidden}}"><image src="/images/loading.gif"></image><span>加载中...</span></view>-->
-      <!--<view class="toLoadMore" hidden="{{loadMoreHidden}}" bindtap="onGetConnect">查看更多</view>-->
-      <view class="toLoadMore" bindtap="onGetConnect">查看更多</view>
     </view>
-
-  </view>
+  </scroll-view>
   <view class="h120"></view>
   <!-- 导航栏 -->
   <view class='home_Footer container'>
@@ -140,7 +132,7 @@
 
 </view>
 
-<!-- <view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}"> -->
+ <!--<view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">-->
 <view class="popUp_Box" hidden="true">
   <view class="shadow"></view>
   <view class="show_Layer authorized_Box">

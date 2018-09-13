@@ -28,7 +28,17 @@ Page({
       jl_list:[],
       address_Array: [],
       location:{},
-      city:''
+      city:'',
+      banner:[],
+      banner_mid:'',
+      notice:'',
+      home_Goods:[],
+      intPageIndex:1,
+      height:null,
+      loadMoreHidden: true,
+      noMoreHidden:true,
+      inLoadHidden:true,
+      last_page:null
   },
   //事件处理函数
     cutNav: function (e) {
@@ -36,13 +46,33 @@ Page({
         var current = e.currentTarget.dataset.index;
         this.setData({
             active: current,
-            zx_list:[],
-            jl_list:[]
         });
-        // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
+        that.setData({
+            home_Goods:[]
+        });
+
+        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:(current==1?'asc':''),page:1},'GET').then((res)=>{
+            that.setData({
+                home_Goods:res.goods
+            });
+            if(res.last_page<=1){
+                that.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }else{
+                that.data.intPageIndex++;
+                that.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: true,
+                    inLoadHidden:false
+                })
+            }
+        }).catch((errMsg) => {
+        });
     },
   onLoad: function () {
-      console.log(2222)
       var that = this;
         if (app.globalData.userInfo) {
           this.setData({
@@ -84,7 +114,7 @@ Page({
                           longitude: res.longitude
                       }
                   });
-
+                  console.log(res.latitude, res.longitude);
                   qqmapsdk = new QQMap({
                     key: 'F4BBZ-AEFLP-2GDDZ-L6G57-KP3A2-CDF3L'
                   });
@@ -96,14 +126,17 @@ Page({
                       },
                       success: function(res) {
                           that.setData({
-                              city:res.result.address_component.city
+                              city:res.result.address_component.city,
+                              location:{
+                                  latitude:res.result.location.lat,
+                                  longitude:res.result.location.lng
+                              }
                           });
-                          app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,city:that.data.city,juli:'',page:1},'GET').then((res)=>{
-                              that.setData({
-
-                              })
-                          }).catch((errMsg) => {
-                          });
+                          // app.post('home',{lng:res.result.location.lng,lat:res.result.location.lat,address:that.data.city,juli:'asc',page:1},'GET').then((res)=>{
+                          //     that.setData({
+                          //     })
+                          // }).catch((errMsg) => {
+                          // });
                       },
                       fail: function(res) {
 
@@ -115,16 +148,48 @@ Page({
               }
           });
       // 实例化API核心类
-
+      wx.getSystemInfo({
+          success: function(res) {
+              var rpx=(res.windowHeight/750);
+              that.setData({
+                  height:res.windowHeight/2
+              });
+          }
+      });
   },
 
     onShow: function () {
       var that=this;
-      console.log(that.data.location.longitude)
-        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,city:that.data.city,juli:'',page:1},'GET').then((res)=>{
-            that.setData({
+        that.setData({
+            banner:[],
+            banner_mid:'',
+            notice:'',
+            home_Goods:[]
+        });
 
-            })
+        app.post('home',{lng:'',lat:'',address:'',juli:'',page:that.data.intPageIndex},'GET').then((res)=>{
+            that.setData({
+                banner:res.banner,
+                banner_mid:res.banner_mid,
+                notice:res.notice,
+                home_Goods:res.goods,
+                last_page:res.last_page
+            });
+
+            if(res.last_page<=1){
+                that.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }else{
+                that.data.intPageIndex++;
+                that.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: true,
+                    inLoadHidden:false
+                })
+            }
         }).catch((errMsg) => {
         });
     },
@@ -167,5 +232,54 @@ Page({
             })
         }
 
+    },
+    upper: function(e) {},
+    lower: function(e) {
+        if(this.data.last_page>this.data.intPageIndex){
+            this.onGetConnect();
+        }else{
+            this.setData({
+                loadMoreHidden: true,
+                noMoreHidden: false,
+                inLoadHidden: true
+            });
+        }
+
+    },
+    scroll: function() {},
+    tap: function (e){},
+    tapMove: function (e){},
+    onGetConnect:function (){
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var that=this;
+        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:'asc',page:that.data.intPageIndex},'GET').then((res)=>{
+
+            if(res.last_page>= that.data.intPageIndex){
+                var goods=that.data.home_Goods;
+                for(var i=0;i<res.goods.length;i++){
+                    goods.push(res.goods[i]);
+                }
+                that.data.intPageIndex++;
+                that.setData({
+                    home_Goods:goods,
+                    loadMoreHidden: true,
+                    noMoreHidden: true,
+                    inLoadHidden: false
+                })
+
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+            console.log(that.data.noMoreHidden)
+        }).catch((errMsg) => {
+        });
     }
 });

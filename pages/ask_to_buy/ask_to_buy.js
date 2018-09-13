@@ -5,30 +5,15 @@ var  qqmapsdk;
 const app = getApp();
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-      indicatorDots: true,
-      autoplay: true,
-      interval: 5000,
-      duration: 1000,
-      active:0,zx_list:[],
-      jl_list:[],
-
-      city:''
+      buy_List:[],
+      city:'',
+      intPageIndex:1,
+      last_page:null,
+      loadMoreHidden: true,
+      noMoreHidden: true,
+      inLoadHidden: true
   },
-  //事件处理函数
-    cutNav: function (e) {
-        var that = this;
-        var current = e.currentTarget.dataset.index;
-        this.setData({
-            active: current,
-            zx_list:[],
-            jl_list:[]
-        });
-        // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
-    },
   onLoad: function () {
       var that = this;
         if (app.globalData.userInfo) {
@@ -37,8 +22,6 @@ Page({
             hasUserInfo: true
           })
         } else if (this.data.canIUse){
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
           app.userInfoReadyCallback = res => {
             this.setData({
               userInfo: res.userInfo,
@@ -46,7 +29,6 @@ Page({
             })
           }
         } else {
-          // 在没有 open-type=getUserInfo 版本的兼容处理
           wx.getUserInfo({
             success: res => {
               app.globalData.userInfo = res.userInfo;
@@ -62,22 +44,62 @@ Page({
       wx.setNavigationBarTitle({
           title: '求购'
       });
+        this.doSendMsg();
   },
 
-    onShow: function () {
-        // 调用接口
-        // qqmapsdk.search({
-        //     keyword: '酒店',
-        //     success: function (res) {
-        //         console.log(res);
-        //     },
-        //     fail: function (res) {
-        //         console.log(res);
-        //     },
-        //     complete: function (res) {
-        //         console.log(res);
-        //     }
-        // });
+    onShow: function () {},
+    doSendMsg:function(){
+        var that=this;
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        app.doSend('goods_list',{goods_form:3},'GET').then((res)=>{
+            if (res.status_code== 200){
+                if (res.data.last_page== that.data.intPageIndex) {
+                    var goods = that.data.buy_List;
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.setData({
+                        buy_List: goods,
+                        last_page: res.data.last_page,
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                    return;
+                }else if (res.data.last_page >that.data.intPageIndex) {
+                    var goods = that.data.buy_List;
+                    for (var i=0; i<res.data.goods.length;i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        buy_List: goods,
+                        last_page: res.data.last_page,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                } else {
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+        }).catch((errMsg) =>{});
+
     },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo;
@@ -103,18 +125,82 @@ Page({
             city:list[index].name
         });
     },
-    jump:function (e) {
-        var url=e.currentTarget.dataset.url;
-        var index=e.currentTarget.dataset.index;
-        if(index==3){
-            return;
+
+    upper: function(e) {},
+    lower: function(e) {
+
+        if(this.data.last_page>this.data.intPageIndex){
+            this.setData({
+                shop_cat:[]
+            });
+            this.onGetConnect();
         }else{
-            wx.reLaunch({
-                url: url
-            })
+            this.setData({
+                loadMoreHidden: true,
+                noMoreHidden: false,
+                inLoadHidden: true
+            });
         }
 
     },
+    scroll: function() {},
+    tap: function (e){},
+    tapMove: function (e){},
+    onGetConnect:function (){
+        this.setData({
+            loadMoreHidden: true,
+            noMoreHidden: true,
+            inLoadHidden: true
+        });
+        var that=this;
+        app.doSend('goods_list',{goods_form:3},'GET').then((res)=>{
+            if (res.data.status_code== 200) {
+                if(res.data.last_page==that.data.intPageIndex){
+                    var goods=that.data.buy_List;
+                    for(var i=0;i<res.data.goods.length;i++){
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.setData({
+                        buy_List:goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    });
+                    return;
+                }else if(res.data.last_page>that.data.intPageIndex){
+                    var goods=that.data.buy_List;
+                    for(var i=0;i<res.data.goods.length;i++){
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        buy_List:goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                }else{
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
+                }
+            }else{
+                this.setData({
+                    loadMoreHidden: true,
+                    noMoreHidden: false,
+                    inLoadHidden: true
+                });
+            }
+
+            console.log(that.data.noMoreHidden)
+        }).catch((errMsg) => {
+        });
+    },
+
+
     onMakePhoneCall:function (){
         var that=this;
         wx.makePhoneCall({
