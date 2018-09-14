@@ -4,20 +4,21 @@
     <block wx:for="{{buy_List}}" wx:key="{{index}}">
       <navigator url="/pages/ask_details/ask_details?id={{item.id}}" hover-class="none">
         <view class="layout_LR pat20R">
-          <view class="layout_Left"><image src="/images/motuo.png"></image></view>
+          <view class="layout_Left"><image src="{{item.user.avatar}}"></image></view>
           <view class="layout_Right">
-            <view class="mat10R"><text class="f34R">雅马哈T-1085</text> <text class="btn fR">求购</text></view>
-            <view class="cC f28R mat20R"><text>8月15 12:14</text></view>
+            <view class="mat10R"><text class="f34R">{{item.name}}</text> <text class="btn fR">求购</text></view>
+            <view class="cC f28R mat20R"><text>{{item.updated_at}}</text></view>
           </view>
         </view>
-        <view class="f32R mal20R mar20R mab20R"><text class="c6">摩托车，有意者联系：1599595254</text></view>
-        <view class="address mal20R mar20R"><span><image src="/images/h_addrsess.png"></image>高端大气</span></view>
+        <view class="f32R mal20R mar20R mab20R"><text class="c6">{{item.goods_desc}}</text></view>
+        <view class="address mal20R mar20R"><span><image src="/images/h_addrsess.png"></image>{{item.address}}</span></view>
         <view class="ask_Btn">
-          <view><button><image src="/images/bo_phone.png"></image><text>拨打电话</text></button></view>
-          <view><button><image src="/images/copy.png"></image><text>复制微信号</text></button></view>
-          <view><button><image src="/images/duo.png"></image><text>更多</text></button></view>
+          <view catchtap="onMakePhoneCall" data-text='{{item.mobile}}'><button><image src="/images/bo_phone.png"></image><text>拨打电话</text></button></view>
+          <view catchtap="onCopy" data-text='{{item.wechat_number}}'><button><image src="/images/copy.png"></image><text>复制微信号</text></button></view>
+          <view data-id='{{item.id}}'><button><image src="/images/duo.png"></image><text>更多</text></button></view>
         </view>
       </navigator>
+
     </block>
   </view>
 

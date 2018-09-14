@@ -89,3 +89,115 @@
 .az_list text{
   padding-left: 20rpx;
 }
+/*****************************/
+.filtrate_Box{
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  font-size:28rpx;
+}
+.show_Filtrate{
+  position: absolute;
+  background:#fff;
+  z-index:11;
+  border-radius:0;
+  top:0;
+  width:750rpx;
+  height:100%;
+  left:0;
+}
+.filtrate_Box .filtrate_List{
+  display: inline-block;
+  width:750rpx;
+  background: #fff;
+}
+
+.filtrate_Box .filtrate_List .layout_LR{
+  width:710rpx;
+  height:100rpx;
+  line-height:100rpx;
+  margin-left:20rpx;
+  margin-right:20rpx;
+  border-bottom:1rpx solid #F1F1F1;
+}
+.filtrate_Box .filtrate_List .layout_LR .layout_Left{
+  width:400rpx;
+}
+
+.filtrate_Box .filtrate_List .layout_LR .layout_Right{
+  width:310rpx;
+}
+
+.filtrate_Box .filtrate_List .layout_LR .layout_Right image{
+  width:30rpx;
+  height:30rpx;
+  vertical-align: middle;
+}
+.list_Box{font-size: 30rpx;}
+
+.bgFFA{
+  background:#ffaf00;
+  color:#000;
+}
+.bg3C{
+  background:#ccc;
+  color:#fff;
+}
+/*********************/
+.citypicker{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 100rpx;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 9999;
+}
+.citybody {
+  position: fixed;
+  bottom: 0px;
+  background-color: #fff;
+}
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  z-index: 5;
+}
+.city-cancel {
+  float: left;
+  margin: 3%;
+  color: #828282;
+  font-size: 32rpx;
+}
+.city-true {
+  float: right;
+  margin: 3%;
+  color: #709EF4;
+  font-size: 32rpx;
+}
+picker-view-column view{
+  text-align: center;
+  color: #666;
+  font-size: 28rpx;
+}
+.form .list .province_list{
+  float: left;
+  font-size: 28rpx;
+  color: #666;
+  width: 150rpx;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.down{
+  padding: 272rpx 3% 44rpx 3%;
+}
+.down view{
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  margin-top: 20rpx;
+}

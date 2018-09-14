@@ -194,26 +194,28 @@ Page({
                     inLoadHidden: true
                 });
             }
-
-            console.log(that.data.noMoreHidden)
         }).catch((errMsg) => {
         });
     },
 
 
-    onMakePhoneCall:function (){
+    onMakePhoneCall:function (e){
         var that=this;
         wx.makePhoneCall({
-            phoneNumber:'18988936665'
+            phoneNumber:e.currentTarget.dataset.text
         })
     },
-    onCopy:function () {
+    onCopy:function (e) {
         wx.setClipboardData({
-            data: 'data',
+            data: e.currentTarget.dataset.text,
             success: function(res) {
                 wx.getClipboardData({
                     success: function(res) {
-                        console.log(res.data)
+                        wx.showToast({
+                            title:'复制成功',
+                            icon:'none',
+                            duration: 2000
+                        });
                     }
                 })
             }

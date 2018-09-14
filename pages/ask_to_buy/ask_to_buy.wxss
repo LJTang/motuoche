@@ -5,7 +5,10 @@
 }
 .goods_List{
   width:750rpx;
+}
+navigator{
   background:#fff;
+  margin-bottom: 20rpx;
 }
 .goods_List .layout_LR .layout_Left{
   width:120rpx;

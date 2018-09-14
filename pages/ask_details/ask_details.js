@@ -14,8 +14,10 @@ Page({
       interval: 5000,
       duration: 1000,
       active:0,zx_list:[],
+      location:{},
       jl_list:[],
-
+      d_id:'',
+      details:'',
       city:''
   },
   //事件处理函数
@@ -27,18 +29,18 @@ Page({
             zx_list:[],
             jl_list:[]
         });
-        // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
     },
-  onLoad: function () {
+  onLoad: function (options) {
       var that = this;
+      that.setData({
+          d_id:options.id
+      });
         if (app.globalData.userInfo) {
           this.setData({
             userInfo: app.globalData.userInfo,
             hasUserInfo: true
           })
         } else if (this.data.canIUse){
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
           app.userInfoReadyCallback = res => {
             this.setData({
               userInfo: res.userInfo,
@@ -63,6 +65,57 @@ Page({
   },
 
     onShow: function () {
+        var that=this;
+        var lon,lat;
+        wx.getLocation({
+            type: 'wgs84',
+            success: function(res) {
+                lat = res.latitude;
+                lon = res.longitude;
+                var speed = res.speed;
+                var accuracy = res.accuracy;
+                that.setData({
+                    location:{
+                        latitude: res.latitude,
+                        longitude: res.longitude
+                    }
+                });
+                qqmapsdk = new QQMap({
+                    key: 'F4BBZ-AEFLP-2GDDZ-L6G57-KP3A2-CDF3L'
+                });
+
+                qqmapsdk.reverseGeocoder({
+                    location: {
+                        latitude: lat,
+                        longitude:lon
+                    },
+                    success: function(res) {
+                        that.setData({
+                            city:res.result.address_component.city,
+                            location:{
+                                latitude:res.result.location.lat,
+                                longitude:res.result.location.lng
+                            }
+                        });
+                        app.doSend('qiugou_detail',{goods_id:that.data.d_id,lng:res.result.location.lng,lat:res.result.location.lat},'GET').then((res)=>{
+                            if (res.status_code== 200) {
+                                that.setData({
+                                    details: res.data,
+                                    url: res.url
+                                });
+                            }else{
+                                wx.showToast({
+                                    title: res.message,
+                                    icon: 'none',
+                                })
+                            }
+                        }).catch((errMsg) =>{});
+                    },
+                    fail: function(res) {},
+                    complete: function(res) {}
+                });
+            }
+        });
 
     },
   getUserInfo: function(e) {
@@ -75,16 +128,21 @@ Page({
     onMakePhoneCall:function (){
         var that=this;
         wx.makePhoneCall({
-            phoneNumber:'18988936665'
+            phoneNumber:that.data.details.goods.mobile
         })
     },
     onCopy:function () {
+        var that=this;
         wx.setClipboardData({
-            data: 'data',
+            data:that.data.details.goods.wechat_number,
             success: function(res) {
                 wx.getClipboardData({
                     success: function(res) {
-                        console.log(res.data)
+                        wx.showToast({
+                            title:'复制成功',
+                            icon:'none',
+                            duration: 2000
+                        });
                     }
                 })
             }

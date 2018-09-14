@@ -19,15 +19,15 @@
 
   <view class="layout_LR">
     <view class="layout_Left">联系人</view>
-    <view class="layout_Right"><input type="text" name="name" placeholder-class="place-holder" placeholder="请输入联系人（必填）"/></view>
+    <view class="layout_Right"><input type="text" name="name" placeholder-class="place-holder" placeholder="请输入联系人（必填）" value="{{user_name}}"/></view>
   </view>
   <view class="layout_LR">
     <view class="layout_Left">联系电话</view>
-    <view class="layout_Right"><input type="text" name="mobile" placeholder-class="place-holder" placeholder="请输入联系电话（必填）" maxlength="11"/></view>
+    <view class="layout_Right"><input type="text" name="mobile" placeholder-class="place-holder" placeholder="请输入联系电话（必填）" maxlength="11" value="{{phone}}"/></view>
   </view>
   <view class="layout_LR">
     <view class="layout_Left">微信号</view>
-    <view class="layout_Right"><input type="text" name="wechat_number" placeholder-class="place-holder" placeholder="请输入微信号（必填）"/></view>
+    <view class="layout_Right"><input type="text" name="wechat_number" placeholder-class="place-holder" placeholder="请输入微信号（必填）" value="{{wx_numb}}"/></view>
   </view>
 
   <view class="layout_LR" bindtap="chooseLocation">

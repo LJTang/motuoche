@@ -15,7 +15,11 @@ Page({
       sj_Array:[],
       shop_cat_id:'',
       class_name:'',
-      d_address:''
+      d_address:'',
+      user_name:'',
+      phone:'',
+      wx_numb:'',
+      location:{}
   },
   //事件处理函数
     cutNav: function (e) {
@@ -34,13 +38,25 @@ Page({
           title: '商家入驻'
       });
       app.post('shop','','GET').then((res) => {
-
         that.setData({
             sj_Array:res
         })
-      }).catch((errMsg) => {
-
-      });
+      }).catch((errMsg) =>{});
+    },
+    onShow:function(){
+        var that=this;
+        app.post('user', '','GET').then((res) =>{
+            that.setData({
+                user_name:res.name,
+                phone:res.mobile,
+                wx_numb:res.wechat_number,
+                d_address:res.address,
+                location:{
+                    longitude:res.longitude,
+                    latitude:res.latitude
+                }
+            })
+        }).catch((errMsg)=>{});
     },
     bindPickerChange:function(e){
         var index=e.detail.value;
@@ -101,7 +117,6 @@ Page({
                         imgURL3:res.tempFilePaths[0]
                     })
                 }
-
                 /*
                 wx.uploadFile({
                     header: {
@@ -219,50 +234,52 @@ Page({
                 duration: 2000
             });
         }else{
-            var json={user_id:9,shop_name:e.detail.value.shop_name,shop_cat_id:that.data.shop_cat_id,name:e.detail.value.name,
+            var json={shop_name:e.detail.value.shop_name,shop_cat_id:that.data.shop_cat_id,name:e.detail.value.name,
                 mobile:e.detail.value.mobile,wechat_number:e.detail.value.wechat_number,address:e.detail.value.address,
                 business_start:that.data.time,business_end:that.data.timeTo,business_scope:e.detail.value.business_scope,
                 longitude:that.data.location.longitude,latitude:that.data.location.latitude
-                // store_img:that.data.imgURL,license_img:that.data.imgURL2,business_img:that.data.imgURL3};
                };
             console.log(json);
-            app.post('shop', json,'POST').then((res)=>{
-                wx.showToast({
-                    title: res.message,
-                    icon: 'none',
-                    duration: 2000
-                });
-                for(var i=0;i<3;i++){
-                    wx.uploadFile({
-                        header: {
-                            'content-type': 'multipart/form-data'
-                        },
-                        url: 'http://motor.guangzhoubaidu.com/api/store_img',
-                        filePath:(i==0?that.data.imgURL:(i==1?that.data.imgURL2:that.data.imgURL3)),
-                        name:(i==0?'store_img':(i==1?'license_img':'business_img')),
-                        formData:{'id':id},
-                        success: function(res){
-                            console.log(res);
-                            // var data = JSON.parse(res.data);
-                            // if(index==0){
-                            //     that.setData({
-                            //         imgURL:that.data.url+data.data
-                            //     });
-                            // }else if(index==1){
-                            //     that.setData({
-                            //         imgURL2:that.data.url+data.data
-                            //     })
-                            // }else{
-                            //     that.setData({
-                            //         imgURL3:that.data.url+data.data
-                            //     })
-                            // }
-                        }
+            app.doSend('shop', json,'POST').then((res)=>{
+                if(res.status_code==200){
+                    var id=res.data;
+                    var msg=res.message;
+
+                    for(var i=0;i<3;i++){
+                        wx.uploadFile({
+                            header: {
+                                'content-type': 'multipart/form-data'
+                            },
+                            url: 'http://motor.guangzhoubaidu.com/api/store_img',
+                            filePath:(i==0?that.data.imgURL:(i==1?that.data.imgURL2:that.data.imgURL3)),
+                            name:(i==0?'store_img':(i==1?'license_img':'business_img')),
+                            formData:{'id':id},
+                            success: function(res){
+                                wx.showToast({
+                                    title: msg,
+                                    icon: 'none',
+                                    duration: 2000
+                                });
+                            }
+                        });
+                    }
+                }else if(res.status_code==403){
+                    wx.showToast({
+                        title: res.message,
+                        icon: 'none',
+                        duration: 2000
+                    });
+                    wx.navigateTo({
+                        url: '/pages/personal_data/personal_data'
+                    })
+                }else{
+                    wx.showToast({
+                        title: res.message,
+                        icon: 'none',
+                        duration: 2000
                     });
                 }
-
-            }).catch((errMsg) => {
-            });
+            }).catch((errMsg)=>{});
         }
 
     }

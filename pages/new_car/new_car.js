@@ -1,14 +1,17 @@
 //index.js
 import QQMap from "../../utils/qqmap-wx-jssdk.min";
+var tcity = require("../../utils/citys.js");
+
 //获取应用实例
 var  qqmapsdk;
 const app = getApp();
 Page({
   data: {
       popUP_Bool: false,
+      filtrate_Bool: false,
+      isFiltrate:false,
       height:null,
       new_List:[],
-      city:'',
       location:{},
       loadMoreHidden: true,
       noMoreHidden: true,
@@ -24,18 +27,76 @@ Page({
       min_price:'',
       max_price:'',
       min_pl:'',
-      max_pl:''
+      max_pl:'',
+      goods_form:'',
+      min_miles:'',
+      max_miles:'',
+      year:'',
+      address:'',
+      condition:false,
+      provinces: [],
+      province: "请选择地址",
+      citys: [],
+      city: "",
+      countys: [],
+      county: '',
+      values: '',
+      cityData: '',
   },
-  //事件处理函数
-    cutNav: function (e) {
-        var that = this;
-        var current = e.currentTarget.dataset.index;
+    bindChange: function (e) {
+        var val = e.detail.value;
+        var t = this.data.values;
+        var cityData = this.data.cityData;
+
+        if (val[0] != t[0]) {
+            const citys = [];
+            const countys = [];
+            for (let i = 0; i < cityData[val[0]].sub.length; i++) {
+                citys.push(cityData[val[0]].sub[i].name)
+            }
+            for (let i = 0; i < cityData[val[0]].sub[0].sub.length; i++) {
+                countys.push(cityData[val[0]].sub[0].sub[i].name)
+            }
+
+            this.setData({
+                province: this.data.provinces[val[0]],
+                city: cityData[val[0]].sub[0].name,
+                citys: citys,
+                county: cityData[val[0]].sub[0].sub[0].name,
+                countys: countys,
+                values: val,
+                value: [val[0], 0, 0]
+            })
+
+            return;
+        }
+
+        if (val[1] != t[1]) {
+            const countys = [];
+            for (let i = 0; i < cityData[val[0]].sub[val[1]].sub.length; i++) {
+                countys.push(cityData[val[0]].sub[val[1]].sub[i].name)
+            }
+            this.setData({
+                city: this.data.citys[val[1]],
+                county: cityData[val[0]].sub[val[1]].sub[0].name,
+                countys: countys,
+                values: val,
+                value: [val[0], val[1], 0]
+            });
+            return;
+        }
+        if (val[2] != t[2]) {
+            this.setData({
+                county: this.data.countys[val[2]],
+                values: val
+            });
+            return;
+        }
+    },
+    open: function () {
         this.setData({
-            active: current,
-            zx_list:[],
-            jl_list:[]
-        });
-        // GMAPI.doSendMsg('api/Goods/goods_list',{type:that.data.active}, 'POST', that.onMsgCallBack_Home);
+            condition: !this.data.condition
+        })
     },
   onLoad: function () {
       var that = this;
@@ -51,6 +112,34 @@ Page({
           title: '新车'
       });
       that.doSendMsg();
+
+      tcity.init(that);
+      var cityData = that.data.cityData;
+
+      const provinces = [];
+      const citys = [];
+      const countys = [];
+
+      for (let i = 0; i < cityData.length; i++) {
+          provinces.push(cityData[i].name);
+      }
+      // console.log('省份完成');
+      //省份
+      for (let i = 0; i < cityData[0].sub.length; i++) {
+          citys.push(cityData[0].sub[i].name)
+      }
+      // console.log('city完成');
+      //city
+      for (let i = 0; i < cityData[0].sub[0].sub.length; i++) {
+          countys.push(cityData[0].sub[0].sub[i].name)
+      }
+
+      that.setData({
+          'provinces': provinces,
+          'citys': citys,
+          'countys': countys,
+
+      })
   },
 
     onShow: function () {
@@ -118,7 +207,7 @@ Page({
             b_Status:parseInt(e.currentTarget.dataset.statu)
         });
         app.doSend('goods',{},'GET').then((res)=>{
-            console.log(res)
+            console.log(res);
             if (res.status_code== 200) {
                     that.setData({
                         brand: res.data.brand,
@@ -135,6 +224,44 @@ Page({
     popClose:function (){
         this.setData({
             popUP_Bool:false
+        });
+    },
+    // 开
+    filtrateOpen:function (e){
+      var that=this;
+        this.setData({
+            isFiltrate:true
+        });
+        app.doSend('goods',{},'GET').then((res)=>{
+            if (res.status_code== 200) {
+                    that.setData({
+                        brand: res.data.brand,
+                        brand_list: res.data.brand_list,
+                        goods_cat: res.data.goods_cat
+                    })
+
+            }else{
+
+            }
+        }).catch((errMsg) =>{});
+    },
+    filtrate_Open:function (e){
+        this.setData({
+            filtrate_Bool:true,
+            title:e.currentTarget.dataset.text,
+            b_Status:parseInt(e.currentTarget.dataset.statu)
+        });
+    },
+    // 关闭
+    filtrateClose:function (){
+        this.setData({
+            isFiltrate:false
+        });
+    },
+    // 关闭
+    filtrate_Close:function (){
+        this.setData({
+            filtrate_Bool:false
         });
     },
     //品牌
@@ -185,6 +312,24 @@ Page({
         });
         this.onGetConnect();
     },
+    //公里
+    kilometre:function(e) {
+        var that=this;
+        var min=e.currentTarget.dataset.min;
+        var max=e.currentTarget.dataset.max;
+        this.setData({
+            min_miles:min,
+            max_miles:max
+        });
+    },
+    //商品来源
+    merchandiseResources:function(e) {
+        var that=this;
+        var id=e.currentTarget.dataset.id;
+        this.setData({
+            goods_form:id
+        });
+    },
 
     upper: function(e) {},
     lower: function(e) {
@@ -206,6 +351,7 @@ Page({
     scroll: function() {},
     tap: function (e){},
     tapMove: function (e){},
+
     onGetConnect:function (){
         this.setData({
             loadMoreHidden: true,
@@ -218,15 +364,15 @@ Page({
             brand_id:1,
             min_price:that.data.min_price,
             max_price:that.data.max_price,
-            year:'',
-            min_miles:'',
-            max_miles:'',
-            address:'',
-            goods_form:'',
+            year:that.data.year,
+            min_miles:that.data.min_miles,
+            max_miles:that.data.max_miles,
+            address:that.data.address,
+            goods_form:that.data.goods_form,
             min_pl:that.data.min_pl,
             max_pl:that.data.max_pl,
             cat_id:that.data.cat_id,
-            page:that.data.intPageIndex,
+            page:that.data.intPageIndex
         };
         app.doSend('goods_list',json,'GET').then((res)=>{
             if (res.data.status_code== 200) {
@@ -242,7 +388,6 @@ Page({
                         noMoreHidden: true,
                         inLoadHidden: false
                     })
-
                 }else{
                     this.setData({
                         loadMoreHidden: true,

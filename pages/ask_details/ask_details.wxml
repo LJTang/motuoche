@@ -1,15 +1,15 @@
 <view class="container">
   <view class="goods_List">
     <view class="layout_LR">
-      <view class="layout_Left"><image src="/images/motuo.png" mode=""></image></view>
+      <view class="layout_Left"><image src="{{details.goods.avatar}}" mode=""></image></view>
       <view class="layout_Right">
-          <view class="mat10R"><text class="f34R">雅马哈T-1085</text> <text class="fR cC">85555</text></view>
-          <view class="cC f28R mat20R"><image src="/images/h_addrsess.png"></image>高端大气<text class="fR">8月15 12:14</text></view>
+          <view class="mat10R"><text class="f34R">{{details.goods.name}}</text> <text class="fR cC">{{details.goods.updated_at}}</text></view>
+          <view class="cC f28R mat20R"><image src="/images/h_addrsess.png"></image>{{details.goods.address}}<text class="fR">{{details.goods.juli}}km</text></view>
       </view>
     </view>
   </view>
 
-  <view class="details_Text">gfdhuidicgvbzxdhifvbsdufvbedhfeubhvdfgdfgtfggbfrbfgbfxbgcv</view>
+  <view class="details_Text">{{details.goods.goods_desc}}</view>
 
   <view class="h100R"></view>
   <view class="footer">
