@@ -123,11 +123,21 @@
   border-bottom:1rpx solid #F1F1F1;
 }
 .filtrate_Box .filtrate_List .layout_LR .layout_Left{
-  width:400rpx;
+  width:660rpx;
+  display:flex;
 }
-
+.filtrate_Box .filtrate_List .layout_LR .layout_Left view:first-child{
+  width:160rpx;
+}
+.filtrate_Box .filtrate_List .layout_LR .layout_Left view:last-child{
+  width:500rpx;
+}
+.filtrate_Box .filtrate_List .layout_LR .layout_Left view input{
+  height:100rpx;
+  line-height:100rpx;
+}
 .filtrate_Box .filtrate_List .layout_LR .layout_Right{
-  width:310rpx;
+  width:50rpx;
 }
 
 .filtrate_Box .filtrate_List .layout_LR .layout_Right image{
@@ -135,6 +145,27 @@
   height:30rpx;
   vertical-align: middle;
 }
+.filtrate_Box .filtrate_Btn{
+  margin-top:40rpx;
+  display: flex;
+}
+.filtrate_Box .filtrate_Btn view{
+  width: 345rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  margin-left: 20rpx;
+  border-radius:5px;
+}
+.filtrate_Box .filtrate_Btn view:first-child{
+  background:#fff0ce;
+  color:#999;
+}
+.filtrate_Box .filtrate_Btn view:last-child{
+  background:#ffaf00;
+  color:#000;
+}
+
 .list_Box{font-size: 30rpx;}
 
 .bgFFA{

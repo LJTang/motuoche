@@ -8,6 +8,7 @@ Page({
       popUP_Bool: false,
       height:null,
       intPageIndex:1,
+      last_page:null,
       y_List:[],
       loadMoreHidden: true,
       noMoreHidden: true,
@@ -38,7 +39,7 @@ Page({
   },
 
     onShow: function () {
-        this.doSendMsg();
+        this.onGetConnect();
     },
     doSendMsg:function(){
         var that=this;
@@ -49,7 +50,7 @@ Page({
         });
         var json={
             paixu:'',
-            brand_id:4,
+            brand_id:'',
             min_price:'',
             max_price:'',
             year:'',
@@ -57,6 +58,7 @@ Page({
             max_miles:'',
             address:'',
             goods_form:'',
+            cat_id:4,
             min_pl:'',
             max_pl:'',
             page:that.data.intPageIndex,
@@ -137,7 +139,7 @@ Page({
         var that=this;
         var json={
             paixu:'',
-            brand_id:4,
+            brand_id:'',
             min_price:'',
             max_price:'',
             year:'',
@@ -147,19 +149,32 @@ Page({
             goods_form:'',
             min_pl:'',
             max_pl:'',
-            cat_id:'',
+            cat_id:4,
             page:'',
         };
         app.doSend('goods_list',json,'GET').then((res)=>{
-            if (res.data.status_code== 200) {
-                if(res.data.last_page>= that.data.intPageIndex){
-                    var goods=that.data.y_List;
+            if (res.status_code== 200) {
+                var goods=that.data.y_List;
+                if(res.data.last_page==that.data.intPageIndex){
+                    for(var i=0;i<res.data.goods.length;i++){
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.setData({
+                        y_List:goods,
+                        last_page:res.data.last_page,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                }else if(res.data.last_page>that.data.intPageIndex){
                     for(var i=0;i<res.data.goods.length;i++){
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         y_List:goods,
+                        last_page:res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false

@@ -2,7 +2,7 @@
   <view class="nav bgFFF">
     <view class="classify">
       <view bindtap="popOpen" data-text="品牌" data-statu="0">品牌<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen" data-text="价格排序" data-statu="1">价格排序<image src="/images/classify.png"></image></view>
+      <view bindtap="popOpen" data-text="价格排序" data-statu="1">里程<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen" data-text="价格" data-statu="2">价格<image src="/images/classify.png"></image></view>
       <view bindtap="popOpen" data-text="排量" data-statu="3">排量<image src="/images/classify.png"></image></view>
       <view bindtap="filtrateOpen" data-text="筛选">筛选<image class="filtrate" src="/images/filtrate.png"></image></view>
@@ -43,23 +43,24 @@
       <block wx:for="{{brand}}" wx:for-item="list" wx:key="{{index}}">
         <view class="az_list">
           <view class="az_box"><text>{{list.pinyin}}</text></view>
-          <view class="az_text" wx:for="{{list.name}}" data-id="{{item.id}}" bindtap="bindBrand"><text>{{item.brand_name}}</text></view>
+          <view class="az_text" wx:for="{{list.name}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="bindBrand"><text>{{item.brand_name}}</text></view>
         </view>
       </block>
     </view>
 
-    <view class="list_Box" hidden="{{b_Status==1?false:true}}" style="height:{{height}}px;overflow:auto;">
+    <view class="list_Box" hidden="{{b_Status==2?false:true}}" style="height:{{height}}px;overflow:auto;">
       <view bindtap="sort_Type" data-id="price_desc">价格降序</view>
       <view bindtap="sort_Type" data-id="price_asc">价格升序</view>
     </view>
 
-    <view class="list_Box" hidden="{{b_Status==2?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="onCost" data-min="1" data-max="1000">1-1000</view>
-      <view bindtap="onCost" data-min="1001" data-max="2000">1001-2000</view>
-      <view bindtap="onCost" data-min="2001" data-max="3000">2001-3000</view>
-      <view bindtap="onCost" data-min="3001" data-max="4000">3001-4000</view>
-      <view bindtap="onCost" data-min="4001" data-max="5000">4001-5000</view>
-      <view bindtap="onCost" data-min="5001" data-max="6000">5001-6000</view>
+    <view class="list_Box" hidden="{{b_Status==1?false:true}}" style="height:{{height}}px;overflow:auto;">
+      <view bindtap="kilometre" data-min="0" data-max="500" data-text="0-1000公里">0-1000公里</view>
+      <view bindtap="kilometre" data-min="501" data-max="2000" data-text="501-2000公里">501-2000公里</view>
+      <view bindtap="kilometre" data-min="2001" data-max="4000" data-text="2001-4000公里">2001-4000公里</view>
+      <view bindtap="kilometre" data-min="4001" data-max="6000" data-text="4001-6000公里">4001-6000公里</view>
+      <view bindtap="kilometre" data-min="6001" data-max="1000" data-text="6001-10000公里">6001-10000公里</view>
+      <view bindtap="kilometre" data-min="" data-max="10001" data-text="10000以上">10000以上</view>
+
     </view>
 
     <view class="list_Box" hidden="{{b_Status==3?false:true}}" style="height:{{height}}px;overflow:auto;">
@@ -80,42 +81,42 @@
   <view class="show_Filtrate">
     <view class="filtrate_List">
       <view class="layout_LR" bindtap="filtrate_Open" data-text="排序" data-statu="1">
-        <view class="layout_Left"><text>排序</text></view>
+        <view class="layout_Left"><view>排序</view><view>{{paixu_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR" bindtap="filtrate_Open" data-text="品牌" data-statu="2">
-        <view class="layout_Left"><text>品牌</text></view>
+        <view class="layout_Left"><view>品牌</view><view>{{brand_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR" bindtap="filtrate_Open" data-text="价格" data-statu="3">
-        <view class="layout_Left"><text>价格</text></view>
+        <view class="layout_Left"><view>价格</view><view>{{price_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
-      <view class="layout_LR" bindtap="filtrate_Open" data-text="年份" data-statu="4">
-        <view class="layout_Left"><text>年份</text></view>
+      <view class="layout_LR" data-text="年份" data-statu="4">
+        <view class="layout_Left"><view>年份</view><view><input type="number" bindinput="bindKeyInput" placeholder="请输入年份、如2018" maxlength="4"/></view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR" bindtap="filtrate_Open" data-text="里程" data-statu="5">
-        <view class="layout_Left"><text>里程</text></view>
+        <view class="layout_Left"><view>里程</view><view>{{miles_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR"  bindtap="open" data-text="所在地区" data-statu="6">
-        <view class="layout_Left"><text>所在地区</text></view>
+        <view class="layout_Left"><view>所在地区</view><view>{{province}}{{city}}{{county}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR" bindtap="filtrate_Open" data-text="商品来源" data-statu="7">
-        <view class="layout_Left"><text>商品来源</text></view>
+        <view class="layout_Left"><view>商品来源</view><view>{{form_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
       <view class="layout_LR"  bindtap="filtrate_Open" data-text="排量范围" data-statu="8">
-        <view class="layout_Left"><text>排量范围</text></view>
+        <view class="layout_Left"><view>排量范围</view><view>{{pl_text}}</view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 
@@ -124,10 +125,13 @@
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
     </view>
+
+    <view class="filtrate_Btn">
+      <view class="" bindtap="reset">重置</view>
+      <view class="" bindtap="confirm">确定</view>
+    </view>
   </view>
 </view>
-
-
 
 <view class="popUp_Box" wx:if="{{filtrate_Bool}}">
   <view class="shadow" bindtap="filtrate_Close"></view>
@@ -138,46 +142,46 @@
       <block wx:for="{{brand}}" wx:for-item="list" wx:key="{{index}}">
         <view class="az_list">
           <view class="az_box"><text>{{list.pinyin}}</text></view>
-          <view class="az_text" wx:for="{{list.name}}" data-id="{{item.id}}" bindtap="bindBrand"><text>{{item.brand_name}}</text></view>
+          <view class="az_text" wx:for="{{list.name}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="bindBrand_F" data-text="{{item.brand_name}}"><text>{{item.brand_name}}</text></view>
         </view>
       </block>
     </view>
 
     <view class="list_Box" hidden="{{b_Status==1?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="sort_Type" data-id="price_desc">价格降序</view>
-      <view bindtap="sort_Type" data-id="price_asc">价格升序</view>
+      <view bindtap="sortType_F" data-id="price_desc" data-text="价格降序">价格降序</view>
+      <view bindtap="sortType_F" data-id="price_asc" data-text="价格升序">价格升序</view>
     </view>
 
     <view class="list_Box" hidden="{{b_Status==3?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="onCost" data-min="1" data-max="1000">1-1000</view>
-      <view bindtap="onCost" data-min="1001" data-max="2000">1001-2000</view>
-      <view bindtap="onCost" data-min="2001" data-max="3000">2001-3000</view>
-      <view bindtap="onCost" data-min="3001" data-max="4000">3001-4000</view>
-      <view bindtap="onCost" data-min="4001" data-max="5000">4001-5000</view>
-      <view bindtap="onCost" data-min="5001" data-max="6000">5001-6000</view>
+      <view bindtap="onCost_F" data-min="1" data-max="1000" data-text="1-1000元">1-1000元</view>
+      <view bindtap="onCost_F" data-min="1001" data-max="2000" data-text="1001-2000元">1001-2000元</view>
+      <view bindtap="onCost_F" data-min="2001" data-max="3000" data-text="2001-3000元">2001-3000元</view>
+      <view bindtap="onCost_F" data-min="3001" data-max="4000" data-text="3001-4000元">3001-4000元</view>
+      <view bindtap="onCost_F" data-min="4001" data-max="5000" data-text="4001-5000元">4001-5000元</view>
+      <view bindtap="onCost_F" data-min="5001" data-max="6000" data-text="5001-6000元">5001-6000元</view>
     </view>
 
     <view class="list_Box" hidden="{{b_Status==5?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="kilometre" data-min="0" data-max="500">0-1000公里</view>
-      <view bindtap="kilometre" data-min="501" data-max="2000">501-2000公里</view>
-      <view bindtap="kilometre" data-min="2001" data-max="4000">2001-4000公里</view>
-      <view bindtap="kilometre" data-min="4001" data-max="6000">4001-6000公里</view>
-      <view bindtap="kilometre" data-min="6001" data-max="1000">6001-10000公里</view>
-      <view bindtap="kilometre" data-min="" data-max="10001">10000以上</view>
+      <view bindtap="kilometre_F" data-min="0" data-max="500" data-text="0-1000公里">0-1000公里</view>
+      <view bindtap="kilometre_F" data-min="501" data-max="2000" data-text="501-2000公里">501-2000公里</view>
+      <view bindtap="kilometre_F" data-min="2001" data-max="4000" data-text="2001-4000公里">2001-4000公里</view>
+      <view bindtap="kilometre_F" data-min="4001" data-max="6000" data-text="4001-6000公里">4001-6000公里</view>
+      <view bindtap="kilometre_F" data-min="6001" data-max="1000" data-text="6001-10000公里">6001-10000公里</view>
+      <view bindtap="kilometre_F" data-min="" data-max="10001" data-text="10000以上">10000以上</view>
     </view>
 
     <view class="list_Box" hidden="{{b_Status==8?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="displacement" data-min="124" data-max="">124cc</view>
-      <view bindtap="displacement" data-min="125" data-max="249">125cc-249cc</view>
-      <view bindtap="displacement" data-min="250" data-max="399">250cc-399cc</view>
-      <view bindtap="displacement" data-min="400" data-max="599">400cc-599cc</view>
-      <view bindtap="displacement" data-min="600" data-max="999">600cc-999cc</view>
-      <view bindtap="displacement" data-min="1000" data-max="">1000以上</view>
+      <view bindtap="displacement_F" data-min="124" data-max="" data-text="124cc">124cc</view>
+      <view bindtap="displacement_F" data-min="125" data-max="249" data-text="125cc-249cc">125cc-249cc</view>
+      <view bindtap="displacement_F" data-min="250" data-max="399" data-text="250cc-399cc">250cc-399cc</view>
+      <view bindtap="displacement_F" data-min="400" data-max="599" data-text="400cc-599cc">400cc-599cc</view>
+      <view bindtap="displacement_F" data-min="600" data-max="999" data-text="600cc-999cc">600cc-999cc</view>
+      <view bindtap="displacement_F" data-min="1000" data-max="" data-text="1000以上">1000以上</view>
     </view>
 
     <view class="list_Box" hidden="{{b_Status==7?false:true}}" style="height:{{height}}px;overflow:auto;">
-      <view bindtap="merchandiseResources" data-id="1">个人</view>
-      <view bindtap="merchandiseResources" data-id="2">店铺</view>
+      <view bindtap="merchandiseResources" data-id="1" data-text="个人">个人</view>
+      <view bindtap="merchandiseResources" data-id="2" data-text="店铺">店铺</view>
       <!--<view bindtap="displacement" data-id="1">求购</view>-->
     </view>
 

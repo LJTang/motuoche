@@ -15,7 +15,7 @@
 <!--{{filter.twoDecimalPlaces(orderdata.originalPrice - orderdata.actualPrice)}}-->
 <view class="container">
   <view class="head_Search">
-    <view class="address"><image class="img1" src="/images/top_address.png"></image><span class="v_align_T"> {{city}} </span><image class="img2" src="/images/san.png"></image></view>
+    <view class="address" bindtap="open"><image class="img1" src="/images/top_address.png"></image><span class="v_align_T"> {{city}} </span><image class="img2" src="/images/san.png"></image></view>
     <view class="view_Input">
       <input type="text" placeholder="请输入关键字搜索"/>
       <view class="search_IMG"><image src="/images/zoom.png"></image></view>
@@ -144,4 +144,22 @@
       </view>
     </view>
   </view>
+</view>
+
+<view wx:if="{{condition}}" class="citypicker">
+  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange" class="citybody">
+    <view class="cityheader">
+      <view bindtap="d_Close" class="city-cancel">取消</view>
+      <view bindtap="d_Confirm" class="city-true">确定</view>
+    </view>
+    <picker-view-column>
+      <view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
 </view>

@@ -8,7 +8,7 @@
   line-height:80rpx;
 }
 .head_Search .address{
-  width:200rpx;
+  width:190rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -37,6 +37,7 @@
   display: flex;
   background:#f0f1f3;
   border-radius: 5px;
+  margin: 10rpx;
 }
 .head_Search .view_Input input{
   padding-left:10rpx;
@@ -227,3 +228,5 @@
   height:100rpx;
 }
 .centerByContent_Right{margin: auto;}
+
+@import "../../style/pop.wxss";

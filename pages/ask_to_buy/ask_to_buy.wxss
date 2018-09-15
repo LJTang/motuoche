@@ -70,3 +70,4 @@ button{
   margin-right:20rpx;
   vertical-align: middle;
 }
+@import "../../style/pop.wxss";

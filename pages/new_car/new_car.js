@@ -18,6 +18,7 @@ Page({
       inLoadHidden:false,
       sort:'',
       intPageIndex:1,
+      last_page:null,
       brand:[],
       brand_list:[],
       goods_cat:[],
@@ -35,13 +36,19 @@ Page({
       address:'',
       condition:false,
       provinces: [],
-      province: "请选择地址",
+      province: "",
       citys: [],
       city: "",
       countys: [],
       county: '',
       values: '',
       cityData: '',
+      miles_text: '',
+      pl_text: '',
+      form_text: '',
+      paixu_text: '',
+      brand_text: '',
+      price_text: '',
   },
     bindChange: function (e) {
         var val = e.detail.value;
@@ -115,25 +122,18 @@ Page({
 
       tcity.init(that);
       var cityData = that.data.cityData;
-
       const provinces = [];
       const citys = [];
       const countys = [];
-
       for (let i = 0; i < cityData.length; i++) {
           provinces.push(cityData[i].name);
       }
-      // console.log('省份完成');
-      //省份
       for (let i = 0; i < cityData[0].sub.length; i++) {
           citys.push(cityData[0].sub[i].name)
       }
-      // console.log('city完成');
-      //city
       for (let i = 0; i < cityData[0].sub[0].sub.length; i++) {
           countys.push(cityData[0].sub[0].sub[i].name)
       }
-
       that.setData({
           'provinces': provinces,
           'citys': citys,
@@ -154,7 +154,7 @@ Page({
         });
         var json={
             paixu:'',
-            brand_id:1,
+            brand_id:'',
             min_price:'',
             max_price:'',
             year:'',
@@ -164,23 +164,35 @@ Page({
             goods_form:'',
             min_pl:'',
             max_pl:'',
+            cat_id:1,
             page:that.data.intPageIndex,
         };
         app.doSend('goods_list',json,'GET').then((res)=>{
             if (res.status_code== 200){
-                if (res.data.last_page >= that.data.intPageIndex) {
-                    var goods = that.data.new_List;
+                var goods = that.data.new_List;
+                if (res.data.last_page==that.data.intPageIndex) {
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.setData({
+                        new_List: goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    })
+
+                }else if(res.data.last_page >that.data.intPageIndex) {
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         new_List: goods,
+                        last_page: res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false
                     })
-
                 } else {
                     this.setData({
                         loadMoreHidden: true,
@@ -230,7 +242,7 @@ Page({
     filtrateOpen:function (e){
       var that=this;
         this.setData({
-            isFiltrate:true
+            isFiltrate:true,
         });
         app.doSend('goods',{},'GET').then((res)=>{
             if (res.status_code== 200) {
@@ -241,7 +253,6 @@ Page({
                     })
 
             }else{
-
             }
         }).catch((errMsg) =>{});
     },
@@ -271,16 +282,36 @@ Page({
         this.setData({
             brand_id:id
         });
-        this.onGetConnect();
+        this.vacancy();
     },
-    //px
+    //品牌
+    bindBrand_F: function(e) {
+        var that=this;
+        var id=e.currentTarget.dataset.id;
+        this.setData({
+            brand_text:e.currentTarget.dataset.text,
+            brand_id:id
+        });
+        this.filtrate_Close();
+    },
+    //排序
     sort_Type: function(e) {
         var that=this;
         var id=e.currentTarget.dataset.id;
         this.setData({
             paixu:id
         });
-        this.onGetConnect();
+        this.vacancy();
+    },
+    //排序
+    sortType_F: function(e) {
+        var that=this;
+        var id=e.currentTarget.dataset.id;
+        this.setData({
+            paixu_text:e.currentTarget.dataset.text,
+            paixu:id
+        });
+        this.filtrate_Close();
     },
     //类型
     motorcycleType: function(e) {
@@ -291,15 +322,17 @@ Page({
         });
         this.onGetConnect();
     },
-    onCost:function(e) {
+    //排序
+    onCost_F:function(e) {
         var that=this;
         var min=e.currentTarget.dataset.min;
         var max=e.currentTarget.dataset.max;
         this.setData({
+            price_text:e.currentTarget.dataset.text,
             min_price:min,
             max_price:max,
         });
-        this.onGetConnect();
+        this.filtrate_Close();
     },
     //排量
     displacement:function(e) {
@@ -310,7 +343,19 @@ Page({
             min_pl:min,
             max_pl:max
         });
-        this.onGetConnect();
+        this.vacancy();
+    },
+    //排量
+    displacement_F:function(e) {
+        var that=this;
+        var min=e.currentTarget.dataset.min;
+        var max=e.currentTarget.dataset.max;
+        this.setData({
+            pl_text:e.currentTarget.dataset.text,
+            min_pl:min,
+            max_pl:max
+        });
+        this.filtrate_Close();
     },
     //公里
     kilometre:function(e) {
@@ -321,19 +366,82 @@ Page({
             min_miles:min,
             max_miles:max
         });
+        this.vacancy();
+    },
+    //公里
+    kilometre_F:function(e) {
+        var that=this;
+        var min=e.currentTarget.dataset.min;
+        var max=e.currentTarget.dataset.max;
+        this.setData({
+            miles_text:e.currentTarget.dataset.text,
+            min_miles:min,
+            max_miles:max
+        });
+        this.filtrate_Close();
     },
     //商品来源
     merchandiseResources:function(e) {
         var that=this;
         var id=e.currentTarget.dataset.id;
         this.setData({
+            form_text:e.currentTarget.dataset.text,
             goods_form:id
         });
     },
+    //年
+    bindKeyInput:function(e){
+        this.setData({
+            year:e.detail.value
+        });
+    },
+    //重置
+    reset:function(){
+        this.setData({
+            isFiltrate:true,
+            brand_id:'',
+            paixu:'',
+            min_price:'',
+            max_price:'',
+            min_pl:'',
+            max_pl:'',
+            goods_form:'',
+            min_miles:'',
+            max_miles:'',
+            year:'',
+            address:'',
+            miles_text: '',
+            pl_text:'',
+            form_text:'',
+            paixu_text:'',
+            brand_text:'',
+            price_text:'',
+            province:'',
+            city:'',
+            county:'',
+        });
+    },
+    //确定
+    confirm:function(){
+        this.setData({
+            isFiltrate:false,
+            intPageIndex:1,
+            new_List:[]
+        });
+        this.onGetConnect();
+    },
+    // 公用方法
+    vacancy:function () {
+        this.setData({
+            intPageIndex:1,
+            popUP_Bool:false,
+            new_List:[]
+        });
+        this.onGetConnect();
+    },
 
-    upper: function(e) {},
-    lower: function(e) {
-
+    upper: function(e){},
+    lower: function(e){
         if(this.data.last_page>this.data.intPageIndex){
             this.setData({
                 shop_cat:[]
@@ -346,7 +454,6 @@ Page({
                 inLoadHidden: true
             });
         }
-
     },
     scroll: function() {},
     tap: function (e){},
@@ -361,7 +468,7 @@ Page({
         var that=this;
         var json={
             paixu:that.data.paixu,
-            brand_id:1,
+            brand_id:that.data.brand_id,
             min_price:that.data.min_price,
             max_price:that.data.max_price,
             year:that.data.year,
@@ -371,19 +478,31 @@ Page({
             goods_form:that.data.goods_form,
             min_pl:that.data.min_pl,
             max_pl:that.data.max_pl,
-            cat_id:that.data.cat_id,
+            cat_id:1,
             page:that.data.intPageIndex
         };
         app.doSend('goods_list',json,'GET').then((res)=>{
-            if (res.data.status_code== 200) {
-                if(res.data.last_page>= that.data.intPageIndex){
-                    var goods=that.data.new_List;
+            if (res.status_code== 200) {
+                var goods=that.data.new_List;
+                if(res.data.last_page== that.data.intPageIndex){
+                    for(var i=0;i<res.data.goods.length;i++){
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.setData({
+                        new_List:goods,
+                        last_page: res.data.last_page,
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    })
+                }else if(res.data.last_page>that.data.intPageIndex){
                     for(var i=0;i<res.data.goods.length;i++){
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         new_List:goods,
+                        last_page: res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false
@@ -402,9 +521,6 @@ Page({
                     inLoadHidden: true
                 });
             }
-
-            console.log(that.data.noMoreHidden)
-        }).catch((errMsg) => {
-        });
+        }).catch((errMsg) =>{});
     }
 });

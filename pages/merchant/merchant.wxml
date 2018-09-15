@@ -15,7 +15,7 @@
     <view class="classify">
       <view bindtap="popOpen">全部分类<image src="/images/classify.png"></image></view>
       <view bindtap="onToggle">综合排序<image src="/images/classify.png"></image></view>
-      <view bindtap="popOpen">地区<image src="/images/classify.png"></image></view>
+      <view bindtap="open">地区<image src="/images/classify.png"></image></view>
     </view>
   </view>
 
@@ -60,7 +60,24 @@
       <block wx:for="{{shop_cat}}" wx:key="{{index}}">
         <view bindtap="bindSelectionSort" data-id="{{item.id}}">{{item.cat_name}}</view>
       </block>
-
     </view>
   </view>
+</view>
+
+<view wx:if="{{condition}}" class="citypicker">
+  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange" class="citybody">
+    <view class="cityheader">
+      <view bindtap="d_Close" class="city-cancel">取消</view>
+      <view bindtap="d_Confirm" class="city-true">确定</view>
+    </view>
+    <picker-view-column>
+      <view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
 </view>

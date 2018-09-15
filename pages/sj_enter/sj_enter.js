@@ -239,7 +239,6 @@ Page({
                 business_start:that.data.time,business_end:that.data.timeTo,business_scope:e.detail.value.business_scope,
                 longitude:that.data.location.longitude,latitude:that.data.location.latitude
                };
-            console.log(json);
             app.doSend('shop', json,'POST').then((res)=>{
                 if(res.status_code==200){
                     var id=res.data;

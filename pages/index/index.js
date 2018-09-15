@@ -1,5 +1,6 @@
 //index.js
 import QQMap from "../../utils/qqmap-wx-jssdk.min";
+var tcity = require("../../utils/citys.js");
 //获取应用实例
 var  qqmapsdk;
 const app = getApp();
@@ -28,7 +29,7 @@ Page({
       jl_list:[],
       address_Array: [],
       location:{},
-      city:'',
+      // city:'',
       banner:[],
       banner_mid:'',
       notice:'',
@@ -38,7 +39,17 @@ Page({
       loadMoreHidden: true,
       noMoreHidden:true,
       inLoadHidden:true,
-      last_page:null
+      last_page:null,
+      condition:false,
+      provinces: [],
+      province: "",
+      citys: [],
+      city: "",
+      countys: [],
+      county: '',
+      values: '',
+      cityData: '',
+      juli: ''
   },
   //事件处理函数
     cutNav: function (e) {
@@ -46,33 +57,13 @@ Page({
         var current = e.currentTarget.dataset.index;
         this.setData({
             active: current,
+            home_Goods:[],
+            intPageIndex:1,
+            juli:(current==1?'asc':'')
         });
-        that.setData({
-            home_Goods:[]
-        });
-
-        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:(current==1?'asc':''),page:1},'GET').then((res)=>{
-            that.setData({
-                home_Goods:res.goods
-            });
-            if(res.last_page<=1){
-                that.setData({
-                    loadMoreHidden: true,
-                    noMoreHidden: false,
-                    inLoadHidden: true
-                });
-            }else{
-                that.data.intPageIndex++;
-                that.setData({
-                    loadMoreHidden: true,
-                    noMoreHidden: true,
-                    inLoadHidden:false
-                })
-            }
-        }).catch((errMsg) => {
-        });
+        this.onGetConnect();
     },
-  onLoad: function () {
+    onLoad: function () {
       var that = this;
         if (app.globalData.userInfo) {
           this.setData({
@@ -100,53 +91,99 @@ Page({
             }
           })
         }
+
         var lon,lat;
         wx.getLocation({
-              type: 'wgs84',
-              success: function(res) {
-                  lat = res.latitude;
-                  lon = res.longitude;
-                  var speed = res.speed;
-                  var accuracy = res.accuracy;
-                  that.setData({
-                      location:{
-                          latitude: res.latitude,
-                          longitude: res.longitude
-                      }
-                  });
-                  console.log(res.latitude, res.longitude);
-                  qqmapsdk = new QQMap({
+            type: 'wgs84',
+            success: function(res) {
+                lat = res.latitude;
+                lon = res.longitude;
+                var speed = res.speed;
+                var accuracy = res.accuracy;
+                that.setData({
+                    location:{
+                        latitude: res.latitude,
+                        longitude: res.longitude
+                    }
+                });
+                qqmapsdk = new QQMap({
                     key: 'F4BBZ-AEFLP-2GDDZ-L6G57-KP3A2-CDF3L'
-                  });
+                });
+                qqmapsdk.reverseGeocoder({
+                    location: {
+                        latitude: lat,
+                        longitude:lon
+                    },
+                    success: function(res) {
+                        that.setData({
+                            city: res.result.address_component.city,
+                            location: {
+                                latitude: res.result.location.lat,
+                                longitude: res.result.location.lng,
+                                banner:[],
+                                banner_mid:'',
+                                notice:'',
+                                home_Goods:[]
+                            }
+                        });
+                        app.doSend('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:'',page:that.data.intPageIndex},'GET').then((res)=>{
+                            if (res.status_code== 200) {
+                                that.setData({
+                                    banner:res.data.banner,
+                                    banner_mid:res.data.banner_mid,
+                                    notice:res.data.notice,
+                                    last_page:res.data.last_page
+                                });
+                                var goods = that.data.home_Goods;
+                                if (res.data.last_page == that.data.intPageIndex) {
+                                    for (var i = 0; i < res.data.goods.length; i++) {
+                                        goods.push(res.data.goods[i]);
+                                    }
+                                    that.data.intPageIndex++;
+                                    that.setData({
+                                        home_Goods: goods,
+                                        loadMoreHidden: true,
+                                        noMoreHidden: true,
+                                        inLoadHidden: false
+                                    })
 
-                  qqmapsdk.reverseGeocoder({
-                      location: {
-                          latitude: lat,
-                          longitude:lon
-                      },
-                      success: function(res) {
-                          that.setData({
-                              city:res.result.address_component.city,
-                              location:{
-                                  latitude:res.result.location.lat,
-                                  longitude:res.result.location.lng
-                              }
-                          });
-                          // app.post('home',{lng:res.result.location.lng,lat:res.result.location.lat,address:that.data.city,juli:'asc',page:1},'GET').then((res)=>{
-                          //     that.setData({
-                          //     })
-                          // }).catch((errMsg) => {
-                          // });
-                      },
-                      fail: function(res) {
+                                } else if (res.data.last_page > that.data.intPageIndex) {
+                                    for (var i = 0; i < res.data.goods.length; i++) {
+                                        goods.push(res.data.goods[i]);
+                                    }
+                                    that.data.intPageIndex++;
+                                    that.setData({
+                                        home_Goods: goods,
+                                        loadMoreHidden: true,
+                                        noMoreHidden: true,
+                                        inLoadHidden: false
+                                    })
 
-                      },
-                      complete: function(res) {
+                                } else {
+                                    this.setData({
+                                        loadMoreHidden: true,
+                                        noMoreHidden: false,
+                                        inLoadHidden: true
+                                    });
+                                }
+                            }else{
+                                this.setData({
+                                    loadMoreHidden: true,
+                                    noMoreHidden: false,
+                                    inLoadHidden: true
+                                });
+                            }
+                        }).catch((errMsg) => {});
+                    },
+                    fail: function(res) {
 
-                      }
-                  });
-              }
-          });
+                    },
+                    complete: function(res) {
+
+                    }
+                });
+            }
+        });
       // 实例化API核心类
       wx.getSystemInfo({
           success: function(res) {
@@ -156,8 +193,28 @@ Page({
               });
           }
       });
-  },
 
+      tcity.init(that);
+      var cityData = that.data.cityData;
+      const provinces = [];
+      const citys = [];
+      const countys = [];
+      for (let i = 0; i < cityData.length; i++) {
+          provinces.push(cityData[i].name);
+      }
+      for (let i = 0; i < cityData[0].sub.length; i++) {
+          citys.push(cityData[0].sub[i].name)
+      }
+      for (let i = 0; i < cityData[0].sub[0].sub.length; i++) {
+          countys.push(cityData[0].sub[0].sub[i].name)
+      }
+      that.setData({
+          'provinces': provinces,
+          'citys': citys,
+          'countys': countys,
+
+      })
+  },
     onShow: function () {
       var that=this;
         that.setData({
@@ -167,31 +224,55 @@ Page({
             home_Goods:[]
         });
 
-        app.post('home',{lng:'',lat:'',address:'',juli:'',page:that.data.intPageIndex},'GET').then((res)=>{
-            that.setData({
-                banner:res.banner,
-                banner_mid:res.banner_mid,
-                notice:res.notice,
-                home_Goods:res.goods,
-                last_page:res.last_page
-            });
+        app.doSend('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:'',page:that.data.intPageIndex},'GET').then((res)=>{
+                            if (res.status_code== 200) {
+                                that.setData({
+                                    banner:res.data.banner,
+                                    banner_mid:res.data.banner_mid,
+                                    notice:res.data.notice,
+                                    last_page:res.data.last_page
+                                });
+                                var goods = that.data.home_Goods;
+                                if (res.data.last_page == that.data.intPageIndex) {
+                                    for (var i = 0; i < res.data.goods.length; i++) {
+                                        goods.push(res.data.goods[i]);
+                                    }
+                                    that.data.intPageIndex++;
+                                    that.setData({
+                                        home_Goods: goods,
+                                        loadMoreHidden: true,
+                                        noMoreHidden: true,
+                                        inLoadHidden: false
+                                    })
 
-            if(res.last_page<=1){
-                that.setData({
-                    loadMoreHidden: true,
-                    noMoreHidden: false,
-                    inLoadHidden: true
-                });
-            }else{
-                that.data.intPageIndex++;
-                that.setData({
-                    loadMoreHidden: true,
-                    noMoreHidden: true,
-                    inLoadHidden:false
-                })
-            }
-        }).catch((errMsg) => {
-        });
+                                } else if (res.data.last_page > that.data.intPageIndex) {
+                                    for (var i = 0; i < res.data.goods.length; i++) {
+                                        goods.push(res.data.goods[i]);
+                                    }
+                                    that.data.intPageIndex++;
+                                    that.setData({
+                                        home_Goods: goods,
+                                        loadMoreHidden: true,
+                                        noMoreHidden: true,
+                                        inLoadHidden: false
+                                    })
+
+                                } else {
+                                    this.setData({
+                                        loadMoreHidden: true,
+                                        noMoreHidden: false,
+                                        inLoadHidden: true
+                                    });
+                                }
+                            }else{
+                                this.setData({
+                                    loadMoreHidden: true,
+                                    noMoreHidden: false,
+                                    inLoadHidden: true
+                                });
+                            }
+                        }).catch((errMsg) => {});
+
     },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo;
@@ -200,6 +281,78 @@ Page({
       hasUserInfo: true
     })
   },
+    //选择地区
+    bindChange: function (e) {
+        var val = e.detail.value;
+        var t = this.data.values;
+        var cityData = this.data.cityData;
+
+        if (val[0] != t[0]) {
+            const citys = [];
+            const countys = [];
+            for (let i = 0; i < cityData[val[0]].sub.length; i++) {
+                citys.push(cityData[val[0]].sub[i].name)
+            }
+            for (let i = 0; i < cityData[val[0]].sub[0].sub.length; i++) {
+                countys.push(cityData[val[0]].sub[0].sub[i].name)
+            }
+
+            this.setData({
+                province: this.data.provinces[val[0]],
+                city: cityData[val[0]].sub[0].name,
+                citys: citys,
+                county: cityData[val[0]].sub[0].sub[0].name,
+                countys: countys,
+                values: val,
+                value: [val[0], 0, 0]
+            })
+
+            return;
+        }
+
+        if (val[1] != t[1]) {
+            const countys = [];
+            for (let i = 0; i < cityData[val[0]].sub[val[1]].sub.length; i++) {
+                countys.push(cityData[val[0]].sub[val[1]].sub[i].name)
+            }
+            this.setData({
+                city: this.data.citys[val[1]],
+                county: cityData[val[0]].sub[val[1]].sub[0].name,
+                countys: countys,
+                values: val,
+                value: [val[0], val[1], 0]
+            });
+            return;
+        }
+        if (val[2] != t[2]) {
+            this.setData({
+                county: this.data.countys[val[2]],
+                values: val
+            });
+            return;
+        }
+    },
+    //打开选择地址
+    open: function () {
+        this.setData({
+            condition:true
+        });
+    },
+    //确定选择地址
+    d_Confirm: function () {
+        this.setData({
+            condition:false,
+            home_Goods:[],
+            intPageIndex:1
+        });
+        this.onGetConnect();
+    },
+    //关闭选择地址
+    d_Close: function () {
+        this.setData({
+            condition:false
+        })
+    },
     // 关闭
     popClose:function () {
         this.setData({
@@ -217,6 +370,7 @@ Page({
             city:list[index].name
         });
     },
+    //底部导航栏
     jump:function (e) {
         var url=e.currentTarget.dataset.url;
         var index=e.currentTarget.dataset.index;
@@ -249,6 +403,7 @@ Page({
     scroll: function() {},
     tap: function (e){},
     tapMove: function (e){},
+
     onGetConnect:function (){
         this.setData({
             loadMoreHidden: true,
@@ -256,21 +411,41 @@ Page({
             inLoadHidden: true
         });
         var that=this;
-        app.post('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:'asc',page:that.data.intPageIndex},'GET').then((res)=>{
+        app.doSend('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:that.data.juli,page:that.data.intPageIndex},'GET').then((res)=>{
+            if (res.status_code== 200) {
+                if (res.data.last_page == that.data.intPageIndex) {
+                    var goods = that.data.home_Goods;
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        home_Goods: goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
 
-            if(res.last_page>= that.data.intPageIndex){
-                var goods=that.data.home_Goods;
-                for(var i=0;i<res.goods.length;i++){
-                    goods.push(res.goods[i]);
+                } else if (res.data.last_page > that.data.intPageIndex) {
+                    var goods = that.data.home_Goods;
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        home_Goods: goods,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                } else {
+                    this.setData({
+                        loadMoreHidden: true,
+                        noMoreHidden: false,
+                        inLoadHidden: true
+                    });
                 }
-                that.data.intPageIndex++;
-                that.setData({
-                    home_Goods:goods,
-                    loadMoreHidden: true,
-                    noMoreHidden: true,
-                    inLoadHidden: false
-                })
-
             }else{
                 this.setData({
                     loadMoreHidden: true,
@@ -278,7 +453,6 @@ Page({
                     inLoadHidden: true
                 });
             }
-            console.log(that.data.noMoreHidden)
         }).catch((errMsg) => {
         });
     }
