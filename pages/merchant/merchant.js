@@ -257,7 +257,6 @@ Page({
         var that=this;
         this.setData({
             popUP_Bool:true,
-            title:e.currentTarget.dataset.text,
             b_Status:parseInt(e.currentTarget.dataset.statu)
         });
         app.doSend('goods',{},'GET').then((res)=>{

@@ -16,8 +16,8 @@
 <view class="container">
   <view class="head_Search">
     <view class="address" bindtap="open"><image class="img1" src="/images/top_address.png"></image><span class="v_align_T"> {{city}} </span><image class="img2" src="/images/san.png"></image></view>
-    <view class="view_Input">
-      <input type="text" placeholder="请输入关键字搜索"/>
+    <view class="view_Input" bindtap="jump_Search">
+      <input type="text" placeholder="请输入关键字搜索" disabled="true"/>
       <view class="search_IMG"><image src="/images/zoom.png"></image></view>
     </view>
   </view>
@@ -54,14 +54,14 @@
     </view>
     </navigator>
 
-    <navigator url="/pages/yanghu/yanghu?id=4" hover-class="none">
+    <navigator url="/pages/yanghu/yanghu?id=5" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/maintain.png"></image></view>
         <view class="text">养护及其他</view>
       </view>
     </navigator>
 
-    <navigator url="/pages/big_trade_car/big_trade_car?id=5" hover-class="none">
+    <navigator url="/pages/big_trade_car/big_trade_car?id=4" hover-class="none">
       <view class="list_Box">
         <view class="roundness"><image class="" src="/images/big_car.png"></image></view>
         <view class="text">大贸车</view>
@@ -132,8 +132,8 @@
 
 </view>
 
- <!--<view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">-->
-<view class="popUp_Box" hidden="true">
+ <view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">
+<!--<view class="popUp_Box" hidden="true">-->
   <view class="shadow"></view>
   <view class="show_Layer authorized_Box">
     <view class="">

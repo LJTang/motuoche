@@ -217,6 +217,7 @@ Page({
   },
     onShow: function () {
       var that=this;
+      /*
         that.setData({
             banner:[],
             banner_mid:'',
@@ -272,6 +273,7 @@ Page({
                                 });
                             }
                         }).catch((errMsg) => {});
+                        */
 
     },
   getUserInfo: function(e) {
@@ -438,7 +440,6 @@ Page({
                         noMoreHidden: true,
                         inLoadHidden: false
                     })
-
                 } else {
                     this.setData({
                         loadMoreHidden: true,
@@ -455,5 +456,10 @@ Page({
             }
         }).catch((errMsg) => {
         });
+    },
+    jump_Search:function () {
+        wx.navigateTo({
+            url: '/pages/search/search'
+        })
     }
 });

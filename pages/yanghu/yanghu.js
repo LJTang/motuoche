@@ -58,7 +58,7 @@ Page({
             max_miles:'',
             address:'',
             goods_form:'',
-            cat_id:4,
+            cat_id:5,
             min_pl:'',
             max_pl:'',
             page:that.data.intPageIndex,
@@ -149,7 +149,7 @@ Page({
             goods_form:'',
             min_pl:'',
             max_pl:'',
-            cat_id:4,
+            cat_id:5,
             page:'',
         };
         app.doSend('goods_list',json,'GET').then((res)=>{

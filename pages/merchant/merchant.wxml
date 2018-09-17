@@ -56,9 +56,11 @@
 <view class="popUp_Box" wx:if="{{popUP_Bool}}">
   <view class="shadow" bindtap="popClose"></view>
   <view class="show_Layer classify_Box">
-    <view class="list_Box">
+    <view class="brand_Box">
       <block wx:for="{{shop_cat}}" wx:key="{{index}}">
-        <view bindtap="bindSelectionSort" data-id="{{item.id}}">{{item.cat_name}}</view>
+        <view class="az_list">
+          <view class="az_text" bindtap="bindSelectionSort" data-id="{{item.id}}"><text>{{item.cat_name}}</text></view>
+        </view>
       </block>
     </view>
   </view>
