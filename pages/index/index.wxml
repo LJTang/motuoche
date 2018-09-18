@@ -25,7 +25,7 @@
   <swiper class="swiper_IMG" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <block wx:for="{{banner}}" wx:key="{{index}}">
       <swiper-item>
-        <image src="{{item.ad_img}}" class="slide-image" mode="widthFix"/>
+        <image src="{{item.ad_img}}" class="slide-image" mode=""/>
       </swiper-item>
     </block>
   </swiper>
@@ -89,7 +89,7 @@
     </navigator>
   </view>
   <!-- 图片 -->
-  <view class="home_IMg"><image class="" src="{{banner_mid.ad_img}}" mode="widthFix"></image></view>
+  <view class="home_IMg"><image class="" src="{{banner_mid.ad_img}}"></image></view>
 
   <view class="home_Nav">
     <view bindtap="cutNav" data-index="0"><text class="{{active==0?'active':''}}">最新上架</text></view>

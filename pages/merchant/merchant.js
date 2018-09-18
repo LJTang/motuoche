@@ -18,7 +18,7 @@ Page({
       nav: [
           { img: "/images/foot_nav1.png", url: "/pages/index/index", type:"", text: "首页", on: false },
           { img: "/images/foot_nav2_a.png", url: "/pages/merchant/merchant", type:"", text: "商家", on: true },
-          { img: "/images/fa.png", url: "/pages/login/login", text: "发布 ", type:"", on: false },
+          { img: "/images/fa.png", url: "/pages/publish/publish", text: "发布 ", type:"", on: false },
           { img: "/images/foot_nav4.png", url:"", text: "客服", type:"contact",on: false },
           { img: "/images/foot_nav5.png", url: "/pages/my_index/my_index", text: "我的", type:"", on: false },
       ],

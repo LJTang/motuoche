@@ -172,6 +172,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    api_url: 'http://motor.guangzhoubaidu.com/api/'
+    // api_url: 'http://motor.guangzhoubaidu.com/api/'
+    api_url: 'https://motor.kaifa123.net/api/'
   }
 });

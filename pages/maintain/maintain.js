@@ -480,10 +480,6 @@ Page({
         var index=e.currentTarget.dataset.index;
         if(index==3){
             return;
-        }else if(index==2){
-            wx.navigateTo({
-                url:url
-            })
         }else{
             wx.reLaunch({
                 url: url

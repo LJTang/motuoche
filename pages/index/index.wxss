@@ -67,13 +67,14 @@
   display: flex;
   width:710rpx;
   margin:20rpx auto;
-  height:410rpx;
+  height:355rpx;
   background:#fff;
-  border-radius:10px;
+  border-radius:5px;
 }
 .swiper_IMG image{
   width:710rpx;
-  border-radius:10px;
+  height:355rpx;
+  border-radius:5px;
 }
 /* 功能列表*/
 .feature_List{
@@ -104,10 +105,12 @@
 }
 .home_IMg{
   width:710rpx;
+  height:260rpx;
   margin:20rpx auto;
 }
 .home_IMg image{
   width:710rpx;
+  height:260rpx;
 }
 /*** 商品列表 ****/
 .home_Nav{

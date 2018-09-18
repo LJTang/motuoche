@@ -249,28 +249,41 @@ Page({
                             header: {
                                 'content-type': 'multipart/form-data'
                             },
-                            url: 'http://motor.guangzhoubaidu.com/api/store_img',
+                            url:app.globalData.api_url+'store_img',
                             filePath:(i==0?that.data.imgURL:(i==1?that.data.imgURL2:that.data.imgURL3)),
                             name:(i==0?'store_img':(i==1?'license_img':'business_img')),
                             formData:{'id':id},
                             success: function(res){
                                 wx.showToast({
-                                    title: msg,
+                                    title: '申请入驻成功，请等待审核',
+                                    icon: 'none',
+                                    duration: 2000
+                                });
+                                setTimeout(function () {
+                                    wx.navigateBack({
+                                        delta: 1
+                                    })
+                                },2000)
+                            },fail:function () {
+                                wx.showToast({
+                                    title: '上传图片失败',
                                     icon: 'none',
                                     duration: 2000
                                 });
                             }
                         });
                     }
-                }else if(res.status_code==403){
+                }else if(res.status_code==401){
                     wx.showToast({
                         title: res.message,
                         icon: 'none',
                         duration: 2000
                     });
-                    wx.navigateTo({
-                        url: '/pages/personal_data/personal_data'
-                    })
+                    setTimeout(function () {
+                        wx.navigateBack({
+                            delta: 1
+                        })
+                    },2000)
                 }else{
                     wx.showToast({
                         title: res.message,
