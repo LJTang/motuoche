@@ -1,3 +1,91 @@
+.goods_List .layout_LR .layout_Right .v_First{
+  height:50rpx;
+  line-height:35rpx;
+}
+.goods_List .layout_LR .layout_Right .v_First view{
+  display: inline-block;
+}
+.goods_List .layout_LR .layout_Right .v_Two{
+  height:45rpx;
+  font-size:24rpx;
+}
+.goods_List .layout_LR .layout_Right .v_Three{
+  height:45rpx;
+  font-size:24rpx;
+  line-height: 60rpx;
+}
+.goods_List .layout_LR .layout_Right view .btn{
+  display:inline-block;
+  width:100rpx;
+  padding:1rpx 0;
+  text-align: center;
+  background:#00c670;
+  color: #fff;
+  border-radius: 5px;
+  font-size:26rpx;
+}
+/*************************/
+.about_LR{
+  display:flex;
+  align-items:center;
+  width:750rpx;
+  padding-bottom:30rpx;
+}
+.about_LR .about_Left{
+  width:210rpx;
+  height: 140rpx;
+  margin-left:20rpx;
+  margin-right:40rpx;
+  margin-bottom:20rpx;
+}
+.about_LR .about_Left image{
+  width:210rpx;
+  height: 140rpx;
+}
+
+.about_LR .about_Right{
+  width:460rpx;
+  height: 140rpx;
+  margin-right:20rpx;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding-bottom: 20rpx;
+  border-bottom:1rpx solid #ddd;
+}
+.about_LR .about_Right .v_First{
+  /*height:50rpx;*/
+}
+.about_LR .about_Right .v_First view{
+  display: inline-block;
+}
+.about_LR .about_Right .v_First .btn{
+  display:inline-block;
+  width:100rpx;
+  padding:1rpx 0;
+  text-align: center;
+  background:#00c670;
+  color: #fff;
+  border-radius: 5px;
+  font-size:26rpx;
+}
+.about_LR .about_Right .v_Two{
+  font-size:24rpx;
+}
+.about_LR .about_Right .v_Three{
+  height:45rpx;
+  font-size:24rpx;
+  line-height:60rpx;
+}
+.about_LR .about_Right image{
+  width:30rpx;
+  height:30rpx;
+  vertical-align: middle;
+  margin-right:10rpx;
+}
+/************************/
+
 .classify{
   width:710rpx;
   height: 100rpx;
@@ -50,6 +138,7 @@
   background: #fff;
   top:0;
   left:150rpx;
+  font-size:30rpx;
 }
 .popUp_Box .classify_Box .list_Box view{
   display: inline-block;

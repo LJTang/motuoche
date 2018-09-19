@@ -100,5 +100,5 @@
 .centerByContent_Right{
   margin:auto 20rpx;
   }
-
+.v_Three .fR{text-align: left;}
 @import "../../style/pop.wxss";

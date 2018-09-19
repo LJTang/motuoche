@@ -391,7 +391,7 @@ Page({
     },
     upper: function(e) {},
     lower: function(e) {
-        if(this.data.last_page>this.data.intPageIndex){
+        if(this.data.last_page>=this.data.intPageIndex){
             this.onGetConnect();
         }else{
             this.setData({
@@ -415,27 +415,28 @@ Page({
         var that=this;
         app.doSend('home',{lng:that.data.location.longitude,lat:that.data.location.latitude,address:that.data.city,juli:that.data.juli,page:that.data.intPageIndex},'GET').then((res)=>{
             if (res.status_code== 200) {
+                var goods = that.data.home_Goods;
                 if (res.data.last_page == that.data.intPageIndex) {
-                    var goods = that.data.home_Goods;
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         home_Goods: goods,
+                        last_page: res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false
                     })
 
                 } else if (res.data.last_page > that.data.intPageIndex) {
-                    var goods = that.data.home_Goods;
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         home_Goods: goods,
+                        last_page: res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false

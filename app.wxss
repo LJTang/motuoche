@@ -94,6 +94,14 @@ button::after{
   text-overflow:ellipsis;
   white-space: nowrap;
 }
+.w45_H{
+  width:60%;
+  height:45rpx;
+  overflow:hidden;
+  text-align:right;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 .h120{height:120rpx;}
 .h50{height:50rpx;}
 

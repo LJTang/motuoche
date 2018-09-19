@@ -62,6 +62,7 @@ Page({
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         buy_List: goods,
                         last_page: res.data.last_page,
@@ -128,10 +129,11 @@ Page({
 
     upper: function(e) {},
     lower: function(e) {
-
-        if(this.data.last_page>this.data.intPageIndex){
+        if(this.data.last_page>=this.data.intPageIndex){
             this.setData({
-                shop_cat:[]
+                loadMoreHidden: true,
+                noMoreHidden: true,
+                inLoadHidden: true
             });
             this.onGetConnect();
         }else{
@@ -160,6 +162,7 @@ Page({
                     for(var i=0;i<res.data.goods.length;i++){
                         goods.push(res.data.goods[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         buy_List:goods,
                         loadMoreHidden: true,

@@ -13,14 +13,27 @@
     <view class="goods_List">
       <block wx:for="{{new_List}}" wx:key="{{index}}">
         <navigator url="/pages/commodity_details/commodity_details?id={{item.id}}" hover-class="none">
-          <view class="layout_LR">
-            <view class="layout_Left"><image src="{{item.goods_img}}" mode="widthFix"></image></view>
-            <view class="layout_Right">
-              <view class="h50"><text class="f34R d_Text">{{item.goods_name}}</text> <text class="btn fR">出售</text></view>
-              <view class="cC f28R middle_line">
-                <text class="f28R">{{item.miles}}公里/{{item.year}}年</text> <text class="fR">{{item.created_at}}</text>
+          <!--<view class="layout_LR">-->
+            <!--<view class="layout_Left"><image src="{{item.goods_img}}" mode=""></image></view>-->
+            <!--<view class="layout_Right">-->
+              <!--<view class="v_First">-->
+                <!--<view class="f30R fL d_Text">{{item.goods_name}}</view>-->
+                <!--<view class="btn fR">出售</view>-->
+              <!--</view>-->
+              <!--<view class="v_Two cC"><text>{{item.miles}}公里/{{item.year}}年</text> <text class="fR">{{item.created_at}}</text></view>-->
+              <!--<view class="v_Three cC"><span class="cFFAF00 f30R">￥{{item.goods_price}}</span><view class="fR w45_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>-->
+            <!--</view>-->
+          <!--</view>-->
+
+          <view class="about_LR">
+            <image class="about_Left" src="{{item.goods_img}}" mode=""></image>
+            <view class="about_Right">
+              <view class="v_First">
+                <view class="f30R fL d_Text">{{item.goods_name}}</view>
+                <view class="btn fR">出售</view>
               </view>
-              <view class="cC"><text class="cFFAF00 f30R">￥{{item.goods_price}}</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
+              <view class="v_Two cC"><text>{{item.miles}}公里/{{item.year}}年</text> <text class="fR">{{item.created_at}}</text></view>
+              <view class="v_Three cC"><span class="cFFAF00 f30R">￥{{item.goods_price}}</span><view class="fR w45_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
             </view>
           </view>
         </navigator>
@@ -108,7 +121,7 @@
       </view>
 
       <view class="layout_LR" data-text="年份" data-statu="4">
-        <view class="layout_Left"><view>年份</view><view><input type="number" bindinput="bindKeyInput" placeholder="请输入年份、如2018" maxlength="4"/></view></view>
+        <view class="layout_Left"><view>年份</view><view><input type="number" bindinput="bindKeyInput" placeholder="请输入年份、如2018" maxlength="4" value="{{year}}"/></view></view>
         <view class="layout_Right"><image src="/images/arrow-right.png"></image></view>
       </view>
 

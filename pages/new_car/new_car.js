@@ -43,6 +43,9 @@ Page({
       county: '',
       values: '',
       cityData: '',
+      d_province:'',
+      d_city:'',
+      d_county:'',
       miles_text: '',
       pl_text: '',
       form_text: '',
@@ -64,28 +67,30 @@ Page({
             for (let i = 0; i < cityData[val[0]].sub[0].sub.length; i++) {
                 countys.push(cityData[val[0]].sub[0].sub[i].name)
             }
-
             this.setData({
-                province: this.data.provinces[val[0]],
-                city: cityData[val[0]].sub[0].name,
+                d_province:this.data.provinces[val[0]],
+                d_city:cityData[val[0]].sub[0].name,
+                d_county:cityData[val[0]].sub[0].sub[0].name,
+                // province: this.data.provinces[val[0]],
+                // city: cityData[val[0]].sub[0].name,
                 citys: citys,
-                county: cityData[val[0]].sub[0].sub[0].name,
+                // county: cityData[val[0]].sub[0].sub[0].name,
                 countys: countys,
                 values: val,
                 value: [val[0], 0, 0]
-            })
-
+            });
             return;
         }
-
         if (val[1] != t[1]) {
             const countys = [];
             for (let i = 0; i < cityData[val[0]].sub[val[1]].sub.length; i++) {
                 countys.push(cityData[val[0]].sub[val[1]].sub[i].name)
             }
             this.setData({
-                city: this.data.citys[val[1]],
-                county: cityData[val[0]].sub[val[1]].sub[0].name,
+                d_city:this.data.citys[val[1]],
+                d_county:cityData[val[0]].sub[val[1]].sub[0].name,
+                // city: this.data.citys[val[1]],
+                // county: cityData[val[0]].sub[val[1]].sub[0].name,
                 countys: countys,
                 values: val,
                 value: [val[0], val[1], 0]
@@ -94,11 +99,26 @@ Page({
         }
         if (val[2] != t[2]) {
             this.setData({
-                county: this.data.countys[val[2]],
+                d_county:this.data.countys[val[2]],
+                // county: this.data.countys[val[2]],
                 values: val
             });
             return;
         }
+    },
+    cancel: function () {
+        this.setData({
+            condition:false
+        });
+    },
+    confirm_Address:function () {
+        console.log(this.data.d_province,this.data.d_city,this.data.d_county)
+        this.setData({
+            condition: false,
+            province: this.data.d_province,
+            city:(this.data.d_city==''?'北京市':this.data.d_city),
+            county: this.data.d_county
+        })
     },
     open: function () {
         this.setData({
@@ -174,6 +194,7 @@ Page({
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         new_List: goods,
                         loadMoreHidden: true,
@@ -386,7 +407,8 @@ Page({
         var id=e.currentTarget.dataset.id;
         this.setData({
             form_text:e.currentTarget.dataset.text,
-            goods_form:id
+            goods_form:id,
+            filtrate_Bool:false
         });
     },
     //年
@@ -442,10 +464,7 @@ Page({
 
     upper: function(e){},
     lower: function(e){
-        if(this.data.last_page>this.data.intPageIndex){
-            this.setData({
-                shop_cat:[]
-            });
+        if(this.data.last_page>=this.data.intPageIndex){
             this.onGetConnect();
         }else{
             this.setData({
@@ -488,6 +507,7 @@ Page({
                     for(var i=0;i<res.data.goods.length;i++){
                         goods.push(res.data.goods[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         new_List:goods,
                         last_page: res.data.last_page,

@@ -37,7 +37,7 @@
 .d_Text{
   display:inline-block;
   width:400rpx;
-  height:60rpx;
+  height:50rpx;
   overflow:hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

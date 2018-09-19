@@ -207,6 +207,7 @@ Page({
                     for (var i = 0; i < res.data.shop.length; i++) {
                         goods.push(res.data.shop[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         merchant_List: goods,
                         shop_cat: res.data.shop_cat,
@@ -543,10 +544,7 @@ Page({
     upper: function(e) {},
     lower: function(e) {
 
-        if(this.data.last_page>this.data.intPageIndex){
-            this.setData({
-                shop_cat:[]
-            });
+        if(this.data.last_page>=this.data.intPageIndex){
             this.onGetConnect();
         }else{
             this.setData({
@@ -573,6 +571,7 @@ Page({
                     for(var i=0;i<res.data.shop.length;i++){
                         goods.push(res.data.shop[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         merchant_List:goods,
                         last_page:res.data.last_page,

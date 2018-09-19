@@ -65,14 +65,28 @@ Page({
         };
         app.doSend('goods_list',json,'GET').then((res)=>{
             if (res.status_code== 200) {
-                if (res.data.last_page >= that.data.intPageIndex) {
-                    var goods = that.data.y_List;
+                var goods = that.data.y_List;
+                if (res.data.last_page == that.data.intPageIndex) {
                     for (var i = 0; i < res.data.goods.length; i++) {
                         goods.push(res.data.goods[i]);
                     }
                     that.data.intPageIndex++;
                     that.setData({
                         y_List: goods,
+                        last_page: res.data.last_page,
+                        loadMoreHidden: true,
+                        noMoreHidden: true,
+                        inLoadHidden: false
+                    })
+
+                }else if(res.data.last_page>that.data.intPageIndex) {
+                    for (var i = 0; i < res.data.goods.length; i++) {
+                        goods.push(res.data.goods[i]);
+                    }
+                    that.data.intPageIndex++;
+                    that.setData({
+                        y_List: goods,
+                        last_page: res.data.last_page,
                         loadMoreHidden: true,
                         noMoreHidden: true,
                         inLoadHidden: false
@@ -95,41 +109,27 @@ Page({
         }).catch((errMsg) =>{});
 
     },
-    // 关闭
-    popOpen:function () {
-        this.setData({
-            popUP_Bool:true
-        });
-    },
-    // 关闭
-    popClose:function () {
-        this.setData({
-            popUP_Bool:false
-        });
-    },
-
-    //选择
-    bindPickerChange: function(e) {
-        var that=this;
-        var index=parseInt(e.detail.value);
-        var list=this.data.address_Array;
-        this.setData({
-            address_id:list[index].id,
-            city:list[index].name
-        });
-    },
-    jump:function (e) {
-        var url=e.currentTarget.dataset.url;
-        var index=e.currentTarget.dataset.index;
-        if(index==3){
-            return;
+    upper: function(e){},
+    lower: function(e){
+        if(this.data.last_page>=this.data.intPageIndex){
+            this.setData({
+                loadMoreHidden: true,
+                noMoreHidden: true,
+                inLoadHidden: true
+            });
+            this.onGetConnect();
         }else{
-            wx.reLaunch({
-                url: url
-            })
+            this.setData({
+                loadMoreHidden: true,
+                noMoreHidden: false,
+                inLoadHidden: true
+            });
         }
-
     },
+    scroll: function() {},
+    tap: function (e){},
+    tapMove: function (e){},
+
     onGetConnect:function (){
         this.setData({
             loadMoreHidden: true,
@@ -159,6 +159,7 @@ Page({
                     for(var i=0;i<res.data.goods.length;i++){
                         goods.push(res.data.goods[i]);
                     }
+                    that.data.intPageIndex++;
                     that.setData({
                         y_List:goods,
                         last_page:res.data.last_page,

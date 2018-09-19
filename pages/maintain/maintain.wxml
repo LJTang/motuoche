@@ -12,14 +12,27 @@
     <view class="goods_List bgFFF">
       <block wx:for="{{merchant_List}}" wx:key="{{index}}">
         <navigator url="/pages/business_details/business_details?id={{item.id}}" hover-class="none">
-          <view class="layout_LR">
-            <view class="layout_Left"><image src="{{item.business_img}}" mode="widthFix"></image></view>
-            <view class="layout_Right">
-              <view class="h50"><text class="f34R d_Text">{{item.shop_name}}</text> <text class="fR">···</text></view>
-              <view class="middle_line c9 f28R">营业时间{{item.business_start}}-{{item.business_end}}</view>
-              <view class="cC"><view class="fL w50_H" style="text-align:left;"><image src="/images/h_addrsess.png"></image>{{item.address}}</view><text class="fR">{{item.juli}}km</text></view>
+          <!--<view class="layout_LR">-->
+            <!--<view class="layout_Left"><image src="{{item.business_img}}" mode="widthFix"></image></view>-->
+            <!--<view class="layout_Right">-->
+              <!--<view class="h50"><text class="f34R d_Text">{{item.shop_name}}</text> <text class="fR">···</text></view>-->
+              <!--<view class="middle_line c9 f28R">营业时间{{item.business_start}}-{{item.business_end}}</view>-->
+              <!--<view class="cC"><view class="fL w50_H" style="text-align:left;"><image src="/images/h_addrsess.png"></image>{{item.address}}</view><text class="fR">{{item.juli}}km</text></view>-->
+            <!--</view>-->
+          <!--</view>-->
+
+          <view class="about_LR">
+            <image class="about_Left" src="{{item.business_img}}" mode=""></image>
+            <view class="about_Right">
+              <view class="v_First">
+                <view class="f30R fL d_Text">{{item.shop_name}}</view>
+                <view class="fR">···</view>
+              </view>
+              <view class="v_Two cC"><text>营业时间{{item.business_start}}-{{item.business_end}}</text></view>
+              <view class="v_Three cC"><span class="fR">{{item.juli}}km</span><view class="fL w45_H" style="text-align:left;"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
             </view>
           </view>
+
         </navigator>
       </block>
 

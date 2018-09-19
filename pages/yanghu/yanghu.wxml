@@ -3,12 +3,24 @@
     <view class="goods_List">
       <block wx:for="{{y_List}}" wx:key="{{index}}">
       <navigator url="/pages/commodity_details/commodity_details?id={{item.id}}" hover-class="none">
-        <view class="layout_LR">
-          <view class="layout_Left"><image src="{{item.goods_img}}" mode="widthFix"></image></view>
-          <view class="layout_Right">
-            <view class="h50"><text class="f34R d_Text">{{item.goods_name}}</text> <text class="fR">···</text></view>
-            <view class="middle_line"></view>
-            <view class="cC"><text class="cFFAF00 f30R">￥{{item.goods_price}}</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
+        <!--<view class="layout_LR">-->
+          <!--<view class="layout_Left"><image src="{{item.goods_img}}" mode="widthFix"></image></view>-->
+          <!--<view class="layout_Right">-->
+            <!--<view class="h50"><text class="f34R d_Text">{{item.goods_name}}</text> <text class="fR">···</text></view>-->
+            <!--<view class="middle_line"></view>-->
+            <!--<view class="cC"><text class="cFFAF00 f30R">￥{{item.goods_price}}</text><view class="fR f26R w50_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>-->
+          <!--</view>-->
+        <!--</view>-->
+
+        <view class="about_LR">
+          <image class="about_Left" src="{{item.goods_img}}" mode=""></image>
+          <view class="about_Right">
+            <view class="v_First">
+              <view class="f30R fL d_Text">{{item.goods_name}}</view>
+              <view class="fR">···</view>
+            </view>
+            <view class="v_Two cC"></view>
+            <view class="v_Three cC"><span class="cFFAF00 f30R">￥{{item.goods_price}}</span><view class="fR w45_H"><image src="/images/h_addrsess.png"></image>{{item.address}}</view></view>
           </view>
         </view>
       </navigator>
