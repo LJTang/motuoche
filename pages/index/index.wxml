@@ -148,13 +148,13 @@
 </view>
 
  <!--<view class="popUp_Box" wx:if="{{!hasUserInfo && canIUse}}">-->
-<view class="popUp_Box" hidden="true">
+<view class="popUp_Box" wx:if="{{hasUserInfo}}">
   <view class="shadow"></view>
   <view class="show_Layer authorized_Box">
     <view class="">
       <view class="authorized_Describe">授权</view>
       <view class="authorized_Btn">
-        <view class="btn_Cancel" bindtap="popClose">取消</view>
+        <!--<view class="btn_Cancel" bindtap="popClose">取消</view>-->
         <view class="btn_OK"><button open-type="getUserInfo" bindgetuserinfo="getUserInfo">确定</button></view>
       </view>
     </view>

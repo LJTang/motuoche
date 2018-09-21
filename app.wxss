@@ -280,7 +280,7 @@ button::after{
   border-top:1rpx solid #999;
 }
 .authorized_Btn .btn_Cancel,.authorized_Btn .btn_OK{
-  width:275rpx;
+  width:100%;
   line-height:100rpx;
 }
 .authorized_Btn .btn_Cancel{

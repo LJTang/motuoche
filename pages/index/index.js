@@ -65,32 +65,36 @@ Page({
     },
     onLoad: function () {
       var that = this;
-        if (app.globalData.userInfo) {
-          this.setData({
-            userInfo: app.globalData.userInfo,
-            hasUserInfo: true
-          })
-        } else if (this.data.canIUse){
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
-          app.userInfoReadyCallback = res => {
-            this.setData({
-              userInfo: res.userInfo,
-              hasUserInfo: true
-            })
-          }
-        } else {
-          // 在没有 open-type=getUserInfo 版本的兼容处理
-          wx.getUserInfo({
+        wx.getSetting({
             success: res => {
-              app.globalData.userInfo = res.userInfo;
-              this.setData({
-                userInfo: res.userInfo,
-                hasUserInfo: true
-              })
+                if (res.authSetting['scope.userInfo']){
+                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                    wx.getUserInfo({
+                        success: res => {
+                            // 可以将 res 发送给后台解码出 unionId
+                            // this.globalData.userInfo = res.userInfo;
+                            that.setData({
+                                userInfo:res.userInfo,
+                                hasUserInfo:false
+                            });
+
+                            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+                            // 所以此处加入 callback 以防止这种情况
+                            if (this.userInfoReadyCallback) {
+                                this.userInfoReadyCallback(res)
+
+                            }
+                            // GMAPI.doSendMsg('api/user/userInfo',{uid:wx.getStorageSync('strWXID').strUserID},'GET',that.onMsgCallBack_BusinessTips);
+
+                        }
+                    })
+                }else{
+                    that.setData({
+                        hasUserInfo:true
+                    });
+                }
             }
-          })
-        }
+        });
 
         var lon,lat;
         wx.getLocation({
@@ -276,13 +280,47 @@ Page({
                         */
 
     },
-  getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo;
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
+
+    // 授权
+    getUserInfo: function (e) {
+        var that=this;
+        this.setData({
+            popUp_Bool:false
+        });
+        if(e.detail.errMsg=='getUserInfo:ok'){
+            app.globalData.userInfo = e.detail.userInfo;
+            wx.setStorage({
+                key: 'getUserInfo',
+                data: true
+            });
+            this.setData({
+                my_UserInfo:false,
+                imgURL:e.detail.userInfo.avatarUrl,
+                userInfo: e.detail.userInfo,
+                hasUserInfo: false
+            });
+            wx.login({
+                success: res => {
+                    var code = res.code;
+                    wx.setStorage({
+                        key: 'log',
+                        data:{code:res.code}
+                    });
+                    var data = e.detail;
+                    data.code = code;
+                    app.post('login',data,'POST').then((res) =>{
+                        wx.setStorageSync('token', res.access_token);
+                    }).catch((errMsg) =>{});
+                }
+            });
+
+        }else{
+            this.setData({
+                popUp_Bool:false,
+                hasUserInfo: true
+            });
+        }
+    },
     //选择地区
     bindChange: function (e) {
         var val = e.detail.value;
