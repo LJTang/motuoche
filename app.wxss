@@ -175,7 +175,17 @@ button::after{
   left:50%;
   margin-left:-40rpx;
 }
-
+/********************/
+.pastDue_Box{
+  width:550rpx;
+  height:100rpx;
+  top:50%;
+  margin-top: -50rpx;
+  left:100rpx;
+  text-align:center;
+}
+.pastDue{height:100rpx;
+line-height: 100rpx;}
 /*********** 弹出框 *************/
 .drawer_screen {
   width: 100%;

@@ -40,23 +40,24 @@ Page({
       app.post('shop','','GET').then((res) => {
         that.setData({
             sj_Array:res
-        })
+        });
       }).catch((errMsg) =>{});
+
+      app.post('user', '','GET').then((res) =>{
+          that.setData({
+              user_name:res.name,
+              phone:res.mobile,
+              wx_numb:res.wechat_number,
+              d_address:res.address,
+              location:{
+                  longitude:res.longitude,
+                  latitude:res.latitude
+              }
+          })
+      }).catch((errMsg)=>{});
     },
     onShow:function(){
         var that=this;
-        app.post('user', '','GET').then((res) =>{
-            that.setData({
-                user_name:res.name,
-                phone:res.mobile,
-                wx_numb:res.wechat_number,
-                d_address:res.address,
-                location:{
-                    longitude:res.longitude,
-                    latitude:res.latitude
-                }
-            })
-        }).catch((errMsg)=>{});
     },
     bindPickerChange:function(e){
         var index=e.detail.value;

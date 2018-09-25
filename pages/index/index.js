@@ -49,7 +49,8 @@ Page({
       county: '',
       values: '',
       cityData: '',
-      juli: ''
+      juli: '',
+      pastDue:false
   },
   //事件处理函数
     cutNav: function (e) {
@@ -217,7 +218,13 @@ Page({
           'citys': citys,
           'countys': countys,
 
-      })
+      });
+
+        app.doSend('site','','GET').then((res) =>{
+           that.setData({
+               pastDue:(res.data==true?false:true)
+           })
+        }).catch((errMsg) =>{});
   },
     onShow: function () {
       var that=this;

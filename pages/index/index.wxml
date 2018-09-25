@@ -136,7 +136,7 @@
   </scroll-view>
   <view class="h120"></view>
   <!-- 导航栏 -->
-  <view class='home_Footer container'>
+  <view class='home_Footer container' wx:if="{{pastDue==false?true:false}}">
     <block wx:for="{{nav}}" wx:for-item="list" wx:key="">
       <button open-type="{{list.type}}" class='fnav_list' bindtap="jump" data-url='{{list.url}}' data-index="{{index}}">
         <view><image src='{{list.img}}'></image></view>
@@ -177,4 +177,14 @@
       <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
     </picker-view-column>
   </picker-view>
+</view>
+
+
+<view class="popUp_Box" wx:if="{{pastDue}}">
+  <view class="shadow"></view>
+  <view class="show_Layer pastDue_Box">
+    <view class="">
+      <view class="pastDue">应用已到期</view>
+    </view>
+  </view>
 </view>
